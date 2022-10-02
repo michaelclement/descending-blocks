@@ -2,6 +2,7 @@ class Board {
   constructor(ctx, ctxNext) {
     this.ctx = ctx;
     this.ctxNext = ctxNext;
+    this.tickCount = 0;
     this.init();
   }
 
@@ -34,6 +35,16 @@ class Board {
   }
 
   drop() {
+    // This function is called every game tick, so using it to 
+    // keep track of how many ticks have elapsed/when to trigger
+    // interruptions.
+    this.tickCount++;
+    
+    // Every 45 ticks, interrupt the subject
+    if (this.tickCount % 45 == 0) {
+      showInterruption(); // TODO: randomly select an interruption here
+    }
+
     let p = moves[KEY.DOWN](this.piece);
     if (this.valid(p)) {
       this.piece.move(p);

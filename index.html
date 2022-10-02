@@ -25,11 +25,31 @@
         <canvas id="next" class="next"></canvas>
       </div>
       <div class="absolute left-[calc(50%-35px)] bottom-[25px]">
-        <button id="play-btn" onclick="play()" class="duration-500 border-2 border-zinc-200 w-[70px] h-[70px] rounded-full shadow hover:shadow-xl">Play</button>
-        <button id="pause-btn" onclick="pause()" class="duration-500  border-2 border-zinc-200 w-[70px] h-[70px] rounded-full shadow hover:shadow-xl">Pause</button>
+        <button id="play-btn" onclick="play()"
+          class="duration-500 border-2 border-zinc-200 w-[70px] h-[70px]
+          rounded-full shadow hover:shadow-xl">
+          Start</button>
+        <button id="pause-btn" onclick="pause()"
+          class="duration-500  border-2 border-zinc-200 w-[70px] h-[70px]
+          rounded-full shadow hover:shadow-xl">
+          Pause</button>
       </div>
 
     </div>
+  </div>
+
+  <!-- This will hold the interruptions: -->
+  <div id="interruptions-container"
+    class="
+      absolute duration-500 right-[-100%] top-0 w-3/4 h-screen
+      rounded-tl-md rounded-bl-md shadow-2xl bg-white opacity-90"
+    >
+    <button
+      class="duration-500 border-2 w-[45px] h-[45px] absolute
+      rounded-full shadow hover:shadow-xl bg-zinc-800 text-white right-[15px]
+      top-[15px]"
+      onclick="hideInterruption()"
+    >X</button>
   </div>
 
   <script type="text/javascript" src="constants.js"></script>

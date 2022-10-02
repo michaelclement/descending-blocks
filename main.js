@@ -3,6 +3,8 @@ const ctx = canvas.getContext('2d');
 const canvasNext = document.getElementById('next');
 const ctxNext = canvasNext.getContext('2d');
 
+var listenToKeys = true; // Disable when user is being interrupted
+
 let accountValues = {
   score: 0,
   level: 0,
@@ -54,6 +56,7 @@ function addEventListener() {
 }
 
 function handleKeyPress(event) {
+  if (!listenToKeys) {return} // Don't do anything on keypress
   if (event.keyCode === KEY.P) {
     pause();
   }
@@ -140,6 +143,18 @@ function gameOver() {
 
   document.querySelector('#pause-btn').style.display = 'none';
   document.querySelector('#play-btn').style.display = '';
+}
+
+function showInterruption() {
+  let interruptionDiv = document.querySelector('#interruptions-container');
+  interruptionDiv.classList.add('right-0');
+  listenToKeys = false;
+}
+
+function hideInterruption() {
+  let interruptionDiv = document.querySelector('#interruptions-container');
+  interruptionDiv.classList.remove('right-0');
+  listenToKeys = true;
 }
 
 function pause() {
