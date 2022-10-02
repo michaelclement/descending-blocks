@@ -1,51 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>JavaScript Tetris</title>
-    <meta property="og:title" content="JavaScript Tetris" />
-    <meta name="description" content="Tetris game made with modern JavaScript." />
-    <meta name="twitter:description" content="Tetris game made with modern Javascript." />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@melcor76" />
-    <meta name="keywords" content="JavaScript, Tetris" />
-    <meta name="author" content="Michael Karén" />
-    <meta
-      property="og:image"
-      content="https://focused-mestorf-930f82.netlify.com/assets/share-image.png"
-    />
-    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="styles.css" />
-  </head>
-  <body>
-    <div class="grid">
-      <div class="left-column">
-        <h2>HIGH SCORES</h2>
-        <ol id="highScores"></ol>
-      </div>
-      <canvas id="board" class="game-board"></canvas>
-      <div class="right-column">
-        <div>
-          <h1>TETRIS</h1>
-          <p>Score: <span id="score">0</span></p>
-          <p>Lines: <span id="lines">0</span></p>
-          <p>Level: <span id="level">0</span></p>
-          <canvas id="next" class="next"></canvas>
-        </div>
-        <div id="sound-div">
-          <span class="sound-item" id="sound-speaker"></span>
-          <span class="sound-item" id="sound-description"></span>
-        </div>
-        <button id="play-btn" onclick="play()" class="play-button">Play</button>
-        <button id="pause-btn" onclick="pause()" class="play-button">Pause</button>
-      </div>
-    </div>
 
-    <script type="text/javascript" src="constants.js"></script>
-    <script type="text/javascript" src="board.js"></script>
-    <script type="text/javascript" src="piece.js"></script>
-    <script type="text/javascript" src="sound.js"></script>
-    <script type="text/javascript" src="main.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Awareness</title>
+  <meta name="description" content="Cognitive load and situational awareness test." />
+  <link rel="stylesheet" type="text/css" href="styles.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="text-zinc-800">
+  <div class="flex flex-row flex-nowrap justify-center w-full mt-[25px] font-sans container mx-auto w-full h-full">
+    <div class="left-column">
+      <h2>HIGH SCORES</h2>
+      <ol id="highScores" class="font-mono"></ol>
+    </div>
+    <canvas id="board" class="border-2 rounded-md border-zinc-500 ml-[15px] mr-[15px]"></canvas>
+    <div class="right-column">
+      <div>
+        <p>Score: <span id="score" class="font-mono">0</span></p>
+        <p>Lines: <span id="lines" class="font-mono">0</span></p>
+        <p>Level: <span id="level" class="font-mono">0</span></p>
+        <canvas id="next" class="next"></canvas>
+      </div>
+      <div class="absolute left-[calc(50%-35px)] bottom-[25px]">
+        <button id="play-btn" onclick="play()" class="duration-500 border-2 border-zinc-200 w-[70px] h-[70px] rounded-full shadow hover:shadow-xl">Play</button>
+        <button id="pause-btn" onclick="pause()" class="duration-500  border-2 border-zinc-200 w-[70px] h-[70px] rounded-full shadow hover:shadow-xl">Pause</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="constants.js"></script>
+  <script type="text/javascript" src="board.js"></script>
+  <script type="text/javascript" src="piece.js"></script>
+  <script type="text/javascript" src="main.js"></script>
+</body>
+
 </html>

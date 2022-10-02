@@ -22,15 +22,6 @@ class Sound {
 
 }
 
-Sound.prototype.soundSetting = function(){
-    let soundItems = document.querySelectorAll(".sound-item");
-    for(let soundItem of soundItems){
-        soundItem.addEventListener("click", (e)=>{
-            this.muteToggle();
-        });
-    }
-};
-
 Sound.prototype.muteToggle = function(){
     if(!this.muted){
         for(let sound of this.sounds){
