@@ -1,6 +1,7 @@
 /**
  * TODO
  * - Create interruptions
+ * - Add button to toggle HCI improvements
  * - Prevent the user from dismissing the interruption screen
  * - Implement 5 minute timer
  * - Implement survey at the end that asks about cog. load
@@ -9,12 +10,29 @@
  *   - Ask user for his name 
  *   - Provide 5 second visual countdown before game begins
  *   - ?
+ * - Hide high-scores
+ * - Track data
+ *   - Tasks completed
+ *   - cognitive load per round
+ *   - block game score
+ *   - others?
  */
 
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
 const canvasNext = document.getElementById('next');
 const ctxNext = canvasNext.getContext('2d');
+
+var improved = false; // Whether or not we're showing the HCI "improvements"
+
+// TODO: make 5 unique interruption classes and add here
+const interruptions = {
+  0: SlidingInterruption,
+  1: SlidingInterruption,
+  2: SlidingInterruption,
+  3: SlidingInterruption,
+  4: SlidingInterruption,
+}
 
 var listenToKeys = true; // Disable when user is being interrupted
 
@@ -158,6 +176,11 @@ function gameOver() {
   document.querySelector('#play-btn').style.display = '';
 }
 
+// TODO: hook this up to a button on the front end
+function toggleImproved() {
+  improved = !improved;
+}
+
 function showInterruption() {
   let interruptionDiv = document.querySelector('#interruptions-container');
 
@@ -168,8 +191,9 @@ function showInterruption() {
   interruptionDiv.classList.add('right-0');
   listenToKeys = false;
 
-  // TODO: dynamically instantiate interruption classes
-  let interruption = new SlidingInterruption();
+  // Pick a random interruption from 0-4
+  let rand = Math.floor(Math.random() * 5);
+  let interruption = improved ? new interruptions[rand](true): new interruptions[rand];
   interruptionDiv.appendChild(interruption.html.content.firstChild);
 }
 

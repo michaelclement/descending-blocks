@@ -1,9 +1,9 @@
 class SlidingInterruption {
-  constructor(improve=false) {
+  constructor(improveUX=false) {
     this.html = null;
     this.allSliders = null;
     this.targetValue = Math.floor(Math.random() * 100);
-    this.improveUX = improve; // Used to determine if we include HCI improvements
+    this.improveUX = improveUX; // Used to determine if we include HCI improvements
     this.init();
   }
 
