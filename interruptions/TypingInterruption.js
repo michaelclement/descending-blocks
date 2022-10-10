@@ -78,16 +78,16 @@ class TypingInterruption {
                   <span class='material-icons' title='${this.words[choice]}'>content_copy</span>\
                 </button>` : ""}
               </label>
+              ${this.improveUX ? `\
+                <button class='hover:shadow-lg paste-btn rounded-md text-zinc-500 mx-[5px] \
+                px-[8px] pb-[2px] flex content-center align-center' title='s${i}'>\
+                <span class='material-icons' title='s${i}'>content_paste</span>\
+                </button>` : ""}
               <input id="s${i}" 
                      type="text"
                      oninput="updateVal(this)"
                      class="w-[calc(100%-180px)] border border-zinc-500 rounded-md
                      mx-[10px]">
-              ${this.improveUX ? `\
-                <button class='hover:shadow-lg paste-btn rounded-md text-zinc-500 mx-[5px] \
-                px-[8px] pb-[2px] flex content-center align-center' title='s${i}'>\
-                <span class='material-icons' title='s${i}'>content_paste</span>\
-              </button>` : ""}
               </label>
             `
         });
