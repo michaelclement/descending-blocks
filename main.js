@@ -28,10 +28,10 @@ var improved = false; // Whether or not we're showing the HCI "improvements"
 // TODO: make 5 unique interruption classes and add here
 const interruptions = {
   0: SlidingInterruption,
-  1: SlidingInterruption,
-  2: SlidingInterruption,
-  3: SlidingInterruption,
-  4: SlidingInterruption,
+  1: TypingInterruption,
+  2: TypingInterruption,
+  3: TypingInterruption,
+  4: TypingInterruption,
 }
 
 var listenToKeys = true; // Disable when user is being interrupted
