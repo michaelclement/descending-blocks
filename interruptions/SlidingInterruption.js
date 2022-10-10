@@ -67,7 +67,7 @@ class SlidingInterruption {
 
   buildSliders() {
     let retVal = '';
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 4; i++) {
       retVal += `
       <div class="flex flex-row content-center items-center mb-2 mt-2">
         <input id="s${i}" 

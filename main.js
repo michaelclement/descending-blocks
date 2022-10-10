@@ -15,6 +15,7 @@
  *   - Tasks completed
  *   - cognitive load per round
  *   - block game score
+ *   - what mode was active (HCI/Non)
  *   - others?
  */
 

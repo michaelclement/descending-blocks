@@ -1,5 +1,5 @@
 class TypingInterruption {
-    constructor(improveUX = true) {
+    constructor(improveUX=false) {
         this.html = null;
         this.inputs = null;
         this.improveUX = improveUX; // Used to determine if we include HCI improvements
