@@ -14,8 +14,9 @@ class SlidingInterruption {
     let template = document.createElement('template');
     let content = `
     <div id="interruption-inner-container"
-         class="flex m-0 mx-auto justify-center align-center w-full flex-col w-[300px]">
-         <h1>Set all sliders to ${this.targetValue}</h1>
+         class="flex m-0 mx-auto justify-center align-center h-full flex-col w-[400px]">
+         <h1 class="text-center"><b>Set all sliders to ${this.targetValue}</b></h1>
+         <p class="text-center"><i>Up/Down arrow keys can be used to change value</i></p>
          ${this.buildSliders()}
     </div>
     `.trim()
@@ -56,7 +57,7 @@ class SlidingInterruption {
                type="range"
                value="0" 
                class="w-[calc(100%-50px)] h-2 bg-zinc-800 rounded-lg appearance-none cursor-pointer">
-        <label for="s${i}" id="s${i}-val" class="w-[50px] h-[30px] block text-sm font-medium text-zinc-800 flex items-center"></label>
+        <label for="s${i}" id="s${i}-val" class="w-[50px] h-[30px] block text-sm font-medium text-zinc-800 flex items-center justify-center">0</label>
       </div>
     `
     }
