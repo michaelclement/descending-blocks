@@ -1,3 +1,16 @@
+/**
+ * TODO
+ * - Create interruptions
+ * - Prevent the user from dismissing the interruption screen
+ * - Implement 5 minute timer
+ * - Implement survey at the end that asks about cog. load
+ *   - Have a way to save and download the results 
+ * - Create proper work flow:
+ *   - Ask user for his name 
+ *   - Provide 5 second visual countdown before game begins
+ *   - ?
+ */
+
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
 const canvasNext = document.getElementById('next');
@@ -147,8 +160,17 @@ function gameOver() {
 
 function showInterruption() {
   let interruptionDiv = document.querySelector('#interruptions-container');
+
+  if (interruptionDiv.classList.contains("right-0")){
+    return;}// It's still on screen
+
+  interruptionDiv.innerHTML = ""; // Clear any previous content
   interruptionDiv.classList.add('right-0');
   listenToKeys = false;
+
+  // TODO: dynamically instantiate interruption classes
+  let interruption = new SlidingInterruption();
+  interruptionDiv.appendChild(interruption.html.content.firstChild);
 }
 
 function hideInterruption() {
