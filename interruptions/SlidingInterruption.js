@@ -1,8 +1,9 @@
 class SlidingInterruption {
-  constructor() {
+  constructor(improve=false) {
     this.html = null;
     this.allSliders = null;
     this.targetValue = Math.floor(Math.random() * 100);
+    this.improveUX = improve; // Used to determine if we include HCI improvements
     this.init();
   }
 
@@ -17,6 +18,11 @@ class SlidingInterruption {
          class="flex m-0 mx-auto justify-center align-center h-full flex-col w-[400px]">
          <h1 class="text-center"><b>Set all sliders to ${this.targetValue}</b></h1>
          <p class="text-center"><i>Up/Down arrow keys can be used to change value</i></p>
+         ${this.improveUX ? "\
+         <div class='flex flex-row items-center align-center w-[115px] bg-zinc-500 rounded-md text-white m-0 mx-auto mt-[15px]'>\
+          <input name='link-checkbox' id='link-checkbox' class='mx-[5px]' type='checkbox' />\
+          <label for='link-checkbox'>Link sliders</label>\
+        </div>": ''}
          ${this.buildSliders()}
     </div>
     `.trim()
@@ -24,7 +30,7 @@ class SlidingInterruption {
     template.innerHTML = content;
     // Setup a listener to update the score next to each
     // slider whenenver it changes
-    let as = template.content.querySelectorAll("input");
+    let as = template.content.querySelectorAll("input[type='range']");
     as.forEach(as => as.oninput = (e) => this.updateSliderVal(e));
     this.allSliders = as;
 
@@ -35,10 +41,21 @@ class SlidingInterruption {
     // Update the view with current slider value:
     document.getElementById(`${e.target.id}-val`).innerText = e.target.value;
 
+    if (this.improveUX) {
+      // Check if user has checked the "slide all" option:
+      let slideAll = document.getElementById('link-checkbox').checked;
+      if (slideAll) {
+        this.allSliders.forEach(s => {
+          document.getElementById(`${s.id}-val`).innerText = e.target.value;
+          s.value = e.target.value
+        });
+      }
+    }
+
     let count = 0; // Counter of all sliders at target value
 
     this.allSliders.forEach(s => {
-      if (s.value == this.targetValue) {count++}
+      if (s.value == this.targetValue) { count++ }
     })
 
     // Check if task is complete: 
@@ -50,7 +67,7 @@ class SlidingInterruption {
 
   buildSliders() {
     let retVal = '';
-    for (let i=0; i<5; i++) {
+    for (let i = 0; i < 5; i++) {
       retVal += `
       <div class="flex flex-row content-center items-center mb-2 mt-2">
         <input id="s${i}" 
