@@ -1,8 +1,8 @@
 /**
  * TODO
- * - Create interruptions
- * - Add button to toggle HCI improvements
- * - Prevent the user from dismissing the interruption screen
+ * - Create interruptions all
+ * - Set tab index to be appropriate when starting an interruption
+ * - Prevent the sliders challenge from asking for all "0"s
  * - Implement 5 minute timer
  * - Implement survey at the end that asks about cog. load
  *   - Have a way to save and download the results 
