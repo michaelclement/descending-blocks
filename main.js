@@ -29,7 +29,7 @@ const interruptions = {
   0: SlidingInterruption,
   1: TypingInterruption,
   2: LongestWordInterruption,
-  3: LongestWordInterruption,
+  3: SpatialInterruption,
   4: LongestWordInterruption,
 }
 
