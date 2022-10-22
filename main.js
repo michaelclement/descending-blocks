@@ -27,9 +27,9 @@ var improved = false; // Whether or not we're showing the HCI "improvements"
 const interruptions = {
   0: SlidingInterruption,
   1: TypingInterruption,
-  2: TypingInterruption,
-  3: TypingInterruption,
-  4: TypingInterruption,
+  2: LongestWordInterruption,
+  3: LongestWordInterruption,
+  4: LongestWordInterruption,
 }
 
 var listenToKeys = true; // Disable when user is being interrupted

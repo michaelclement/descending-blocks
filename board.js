@@ -42,7 +42,7 @@ class Board {
     
     // Every 45 ticks, interrupt the subject
     if (this.tickCount % 45 == 0) {
-      showInterruption(); // TODO: randomly select an interruption here
+      showInterruption(); 
     }
 
     let p = moves[KEY.DOWN](this.piece);
