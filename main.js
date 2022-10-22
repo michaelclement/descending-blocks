@@ -185,8 +185,21 @@ function toggleImproved() {
 function showInterruption() {
   let interruptionDiv = document.querySelector('#interruptions-container');
 
-  if (interruptionDiv.classList.contains("right-0")){
-    return;}// It's still on screen
+  // After the interruption slides on screen, focus the designated
+  // element (i.e. first text box or whatever)
+  interruptionDiv.addEventListener('transitionend', (event) => {
+    try {
+      let a = document.querySelector('.focus-this');
+      a.focus();
+      // Remove the focus-this class so dismissing works properly
+      a.classList.remove('focus-this');
+    } catch(e) {
+      console.warn(e);
+    }
+  })
+
+  // It's still on screen
+  if (interruptionDiv.classList.contains("right-0")){return;}
 
   interruptionDiv.innerHTML = ""; // Clear any previous content
   interruptionDiv.classList.add('right-0');

@@ -86,8 +86,7 @@ class TypingInterruption {
               <input id="s${i}" 
                      type="text"
                      oninput="updateVal(this)"
-                     class="w-[calc(100%-180px)] border border-zinc-500 rounded-md
-                     mx-[10px]">
+                     class="w-[calc(100%-180px)] border border-zinc-500 rounded-md mx-[10px] ${i==0?'focus-this':''}">
               </label>
             `
         });
