@@ -41,7 +41,7 @@ class Board {
     this.tickCount++;
     
     // Every 45 ticks, interrupt the subject
-    if (this.tickCount % 45 == 0) {
+    if (this.tickCount % 45 == 0 && interrupts) {
       showInterruption(); 
     }
 

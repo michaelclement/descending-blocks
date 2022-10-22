@@ -22,6 +22,7 @@ const canvasNext = document.getElementById('next');
 const ctxNext = canvasNext.getContext('2d');
 
 var improved = false; // Whether or not we're showing the HCI "improvements"
+var interrupts = false; // Whether or not we're throwing interruptions at the user
 
 // TODO: make 5 unique interruption classes and add here
 const interruptions = {
@@ -176,9 +177,12 @@ function gameOver() {
   document.querySelector('#play-btn').style.display = '';
 }
 
-// TODO: hook this up to a button on the front end
 function toggleImproved() {
   improved = !improved;
+}
+
+function toggleInterrupts() {
+  interrupts = !interrupts;
 }
 
 function showInterruption() {
