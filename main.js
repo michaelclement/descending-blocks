@@ -2,7 +2,6 @@
  * TODO
  * - Create interruptions all
  * - Set tab index to be appropriate when starting an interruption
- * - Prevent the sliders challenge from asking for all "0"s
  * - Implement 5 minute timer
  * - Implement survey at the end that asks about cog. load
  *   - Have a way to save and download the results 
