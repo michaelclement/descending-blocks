@@ -10,7 +10,6 @@
  *   - Ask user for his name 
  *   - Provide 5 second visual countdown before game begins
  *   - ?
- * - Hide high-scores
  * - Track data
  *   - Tasks completed
  *   - cognitive load per round
@@ -73,7 +72,7 @@ const moves = {
 let board = new Board(ctx, ctxNext);
 
 initNext();
-showHighScores();
+// showHighScores();
 
 function initNext() {
   // Calculate size of canvas from constants.
@@ -168,11 +167,13 @@ function animate(now = 0) {
 
 function gameOver() {
   cancelAnimationFrame(requestId);
-
-  // TODO: trigger a "game over screen"
-
-  checkHighScore(account.score);
-
+  /**
+   * TODO: 
+   * - Ask user for cognitive load number
+   * - Update relevant data stores with numbers from this round
+   * - Update round counter, reset game board, reset timer, etc
+   */
+  // checkHighScore(account.score);
   document.querySelector('#pause-btn').style.display = 'none';
   document.querySelector('#play-btn').style.display = '';
 }
