@@ -1,7 +1,6 @@
 /**
  * TODO
- * - Create interruptions all
- * - Set tab index to be appropriate when starting an interruption
+ * - Create all interruptions
  * - Implement 5 minute timer
  * - Implement survey at the end that asks about cog. load
  *   - Have a way to save and download the results 
@@ -86,7 +85,7 @@ function addEventListener() {
 }
 
 function handleKeyPress(event) {
-  if (!listenToKeys) {return} // Don't do anything on keypress
+  if (!listenToKeys) { return } // Don't do anything on keypress
   if (event.keyCode === KEY.P) {
     pause();
   }
@@ -100,10 +99,10 @@ function handleKeyPress(event) {
       // Hard drop
       if (document.querySelector('#pause-btn').style.display === 'block') {
         // 
-      }else{
+      } else {
         return;
       }
-      
+
       while (board.valid(p)) {
         account.score += POINTS.HARD_DROP;
         board.piece.move(p);
@@ -115,8 +114,8 @@ function handleKeyPress(event) {
         //
       }
       board.piece.move(p);
-      if (event.keyCode === KEY.DOWN && 
-          document.querySelector('#pause-btn').style.display === 'block') {
+      if (event.keyCode === KEY.DOWN &&
+        document.querySelector('#pause-btn').style.display === 'block') {
         account.score += POINTS.SOFT_DROP;
       }
     }
@@ -193,13 +192,13 @@ function showInterruption() {
       a.focus();
       // Remove the focus-this class so dismissing works properly
       a.classList.remove('focus-this');
-    } catch(e) {
+    } catch (e) {
       console.warn(e);
     }
   })
 
   // It's still on screen
-  if (interruptionDiv.classList.contains("right-0")){return;}
+  if (interruptionDiv.classList.contains("right-0")) { return; }
 
   interruptionDiv.innerHTML = ""; // Clear any previous content
   interruptionDiv.classList.add('right-0');
@@ -207,7 +206,7 @@ function showInterruption() {
 
   // Pick a random interruption from 0-4
   let rand = Math.floor(Math.random() * 5);
-  let interruption = improved ? new interruptions[rand](true): new interruptions[rand];
+  let interruption = improved ? new interruptions[rand](true) : new interruptions[rand];
   interruptionDiv.appendChild(interruption.html.content.firstChild);
 }
 

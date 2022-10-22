@@ -1,5 +1,5 @@
 class TypingInterruption {
-    constructor(improveUX=false) {
+    constructor(improveUX = false) {
         this.html = null;
         this.inputs = null;
         this.improveUX = improveUX; // Used to determine if we include HCI improvements
@@ -41,7 +41,7 @@ class TypingInterruption {
             let inputField = document.getElementById(e.target.title);
             inputField.value = this.clipboard;
             // dispatch an event so it triggers the validity check
-            inputField.dispatchEvent(new Event('input')); 
+            inputField.dispatchEvent(new Event('input'));
         });
 
         return template;
@@ -86,7 +86,7 @@ class TypingInterruption {
               <input id="s${i}" 
                      type="text"
                      oninput="updateVal(this)"
-                     class="w-[calc(100%-180px)] border border-zinc-500 rounded-md mx-[10px] ${i==0?'focus-this':''}">
+                     class="w-[calc(100%-180px)] border border-zinc-500 rounded-md mx-[10px] ${i == 0 ? 'focus-this' : ''}">
               </label>
             `
         });
