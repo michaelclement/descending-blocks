@@ -76,9 +76,6 @@ class LongestWordInterruption {
         }
     }
 
-    sortWords() {
-    }
-
     buildInputs() {
         let retVal = `
             ${this.improveUX ? `\
