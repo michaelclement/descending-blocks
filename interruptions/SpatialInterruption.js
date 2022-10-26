@@ -65,6 +65,8 @@ class SpatialInterruption {
             if (this.clicked.length == Math.floor(this.allButtons.length / this.step)) {
                 hideInterruption();
             }
+        } else if ((e.target.title * 1) % this.step !== 0) {
+            document.getElementById(`btn-${e.target.title}`).classList.add('bg-red-600');
         }
     }
 
@@ -77,7 +79,7 @@ class SpatialInterruption {
         for (let i = 1; i < 11; i++) {
             retVal += `
             <button class="px-[7px] flex flex-row justify-center w-[120px] bg-zinc-500
-              text-white rounded-md m-[5px] p-[3px]" title="${i}">
+              text-white rounded-md m-[5px] p-[3px]" title="${i}" id="btn-${i}">
               <span class='material-icons' title='${i}'>thumb_up</span>\
             </button>`
         };
