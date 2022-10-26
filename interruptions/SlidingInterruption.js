@@ -60,7 +60,6 @@ class SlidingInterruption {
 
     // Check if task is complete: 
     if (count == this.allSliders.length) {
-      // TODO: Big animated checkbox?
       hideInterruption()
     }
   }

@@ -14,7 +14,6 @@ class TypingInterruption {
 
     renderTemplate() {
         let template = document.createElement('template');
-        // TODO: Prevent right-clicking so user can't copy/paste by default
         let content = `
             <div id="interruption-inner-container"
                 class="flex m-0 mx-auto justify-center align-center h-full flex-col w-[400px]">

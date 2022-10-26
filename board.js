@@ -39,6 +39,13 @@ class Board {
     // keep track of how many ticks have elapsed/when to trigger
     // interruptions.
     this.tickCount++;
+
+    // If it's been about 5 minutes, stop the game
+    if (Math.floor(((new Date() - begin)/1000)/60) >= 1) {
+      toast("Time limit reached.");
+      gameOver();
+      return false;
+    }
     
     // Every 45 ticks, interrupt the subject
     if (this.tickCount % 45 == 0 && interrupts) {

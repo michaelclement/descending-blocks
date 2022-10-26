@@ -1,13 +1,10 @@
 /**
  * TODO
  * - Create all interruptions
- * - Implement 5 minute timer
  * - Implement survey at the end that asks about cog. load
  *   - Have a way to save and download the results 
  * - Create proper work flow:
  *   - Ask user for his name 
- *   - Provide 5 second visual countdown before game begins
- *   - ?
  * - Track data
  *   - Tasks completed
  *   - cognitive load per round
@@ -20,6 +17,7 @@ const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
 const canvasNext = document.getElementById('next');
 const ctxNext = canvasNext.getContext('2d');
+var begin;
 
 var improved = false; // Whether or not we're showing the HCI "improvements"
 var interrupts = false; // Whether or not we're throwing interruptions at the user
@@ -97,9 +95,11 @@ function handleKeyPress(event) {
     // Get new state
     let p = moves[event.keyCode](board.piece);
     if (event.keyCode === KEY.SPACE) {
-      // Hard drop
-      if (document.querySelector('#pause-btn').style.display === 'block') {
-        // 
+      // // We don't use the pause button, but leaving this here just in case:
+      // if (document.querySelector('#pause-btn').style.display === 'block') {
+      // // Hard drop
+      if (document.querySelector('#play-btn').style.display === 'none') {
+        // We're playing...
       } else {
         return;
       }
@@ -144,7 +144,10 @@ function play() {
 
   animate();
   document.querySelector('#play-btn').style.display = 'none';
-  document.querySelector('#pause-btn').style.display = 'block';
+  // document.querySelector('#pause-btn').style.display = 'block';
+
+  // Get start date/time for 5 minute round timer
+  begin = new Date();
 }
 
 function animate(now = 0) {
@@ -173,7 +176,7 @@ function gameOver() {
    * - Update round counter, reset game board, reset timer, etc
    */
   // checkHighScore(account.score);
-  document.querySelector('#pause-btn').style.display = 'none';
+  // document.querySelector('#pause-btn').style.display = 'none';
   document.querySelector('#play-btn').style.display = '';
 }
 
@@ -264,4 +267,17 @@ function saveHighScore(score, highScores) {
   highScores.splice(NO_OF_HIGH_SCORES);
 
   localStorage.setItem('highScores', JSON.stringify(highScores));
+}
+
+function toast(msg) {
+  let toast = document.getElementById('toast-default');
+  document.getElementById("toast-text").innerText = msg;
+
+  toast.classList.remove("opacity-0");
+  toast.classList.add("opacity-1");
+
+  setTimeout(() => {
+    toast.classList.remove("opacity-1");
+    toast.classList.add("opacity-0");
+  }, 5000);
 }
