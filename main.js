@@ -28,7 +28,7 @@ const interruptions = {
   1: TypingInterruption,
   2: LongestWordInterruption,
   3: SpatialInterruption,
-  4: LongestWordInterruption,
+  4: ArrangementInterruption,
 }
 
 var listenToKeys = true; // Disable when user is being interrupted
