@@ -75,10 +75,10 @@ class SpatialInterruption {
             <div class="flex flex-row flex-wrap mb-2 mt-2 w-[405px] \
             align-center" id="word-btn-container">`;
 
-        // TODO: UX improvements. (striping/alternating colors?)
-        for (let i = 1; i < 11; i++) {
+        for (let i = 1; i < 10; i++) {
             retVal += `
             <button class="px-[7px] flex flex-row justify-center w-[120px] bg-zinc-500
+              ${this.improveUX ? ([2, 5, 8].includes(i) ? 'bg-zinc-400' : 'bg-zinc-600'): ''}
               text-white rounded-md m-[5px] p-[3px]" title="${i}" id="btn-${i}">
               <span class='material-icons' title='${i}'>thumb_up</span>\
             </button>`
