@@ -31,6 +31,10 @@ const interruptions = {
   4: ArrangementInterruption,
 }
 
+// Create a shuffled array of the interruption index keys,
+// this determines the random order they will be fed to user
+var orderOfInterruptions = shuffleArray([0, 1, 2, 3, 4]);
+
 var listenToKeys = true; // Disable when user is being interrupted
 
 let accountValues = {
@@ -69,7 +73,16 @@ const moves = {
 let board = new Board(ctx, ctxNext);
 
 initNext();
-// showHighScores();
+
+// Function to shuffle an array, used to determine order of interruptions
+// Modified from here: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array#answer-12646864
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+  };
+  return array;
+}
 
 function initNext() {
   // Calculate size of canvas from constants.
@@ -211,9 +224,13 @@ function showInterruption() {
   interruptionDiv.classList.add('right-0');
   listenToKeys = false;
 
+  // Make sure we have a freshly shuffled list of interruptions if we've run out
+  orderOfInterruptions = orderOfInterruptions.length == 0 ?
+    shuffleArray([0, 1, 2, 3, 4]) : orderOfInterruptions;
+  
   // Pick a random interruption from 0-4
-  let rand = Math.floor(Math.random() * 5);
-  let interruption = improved ? new interruptions[rand](true) : new interruptions[rand];
+  let nextInt = orderOfInterruptions.pop();
+  let interruption = improved ? new interruptions[nextInt](true) : new interruptions[nextInt];
   interruptionDiv.appendChild(interruption.html.content.firstChild);
 }
 
