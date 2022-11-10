@@ -41,7 +41,7 @@ class Board {
     this.tickCount++;
 
     // If it's been about 5 minutes, stop the game
-    if (Math.floor(((new Date() - begin)/1000)/60) >= 1) {
+    if (Math.floor(((new Date() - begin)/1000)/60) >= 5) {
       toast("Time limit reached.");
       gameOver();
       return false;
