@@ -7,8 +7,14 @@
   <title>Awareness</title>
   <meta name="description" content="Cognitive load and situational awareness test." />
   <link rel="stylesheet" type="text/css" href="styles.css" />
-  <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="text/javascript" src="./Analytics.js"></script>
+  <script>
+    // Begin tracking metrics
+    ANALYTICS = new Analytics();
+  </script>
 </head>
 
 <body class="text-zinc-800 overflow-x-hidden">
@@ -36,6 +42,9 @@
         <button id="play-btn" onclick="showInterruption()" class="duration-500 border-2 border-zinc-200 w-[70px] h-[70px]
           rounded-full shadow hover:shadow-xl">
           Int</button>
+        <button id="play-btn" onclick="ANALYTICS.exportAllData()" class="duration-500 border-2 border-zinc-200 w-[70px] h-[70px]
+          rounded-full shadow hover:shadow-xl">
+          Data</button>
       </div>
 
     </div>
@@ -86,6 +95,26 @@
   <script type="text/javascript" src="board.js"></script>
   <script type="text/javascript" src="piece.js"></script>
   <script type="text/javascript" src="main.js"></script>
+
+  <script>
+    // Begin tracking metrics
+    ANALYTICS = new Analytics();
+  </script>
+
+  <script>
+    // Warn before closing tab or reloading page
+    window.onbeforeunload = function (e) {
+      e = e || window.event;
+
+      // TODO:
+      // Add stuff here for collecting metrics,
+      // downloading CSV, etc
+
+      // For Safari
+      return 'Sure?';
+    };
+  </script>
+
 </body>
 
 </html>

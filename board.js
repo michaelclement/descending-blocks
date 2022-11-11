@@ -43,7 +43,7 @@ class Board {
     // If it's been about 5 minutes, stop the game
     if (Math.floor(((new Date() - begin)/1000)/60) >= 5) {
       toast("Time limit reached.");
-      gameOver();
+      ANALYTICS.currentDataRow['got_game_over'] = 0;
       return false;
     }
     
@@ -59,7 +59,9 @@ class Board {
       this.freeze();
       this.clearLines();
       if (this.piece.y === 0) {
+        toast("Game over.");
         // Game over
+        ANALYTICS.currentDataRow['got_game_over'] = 1;
         return false;
       }
       this.piece = this.next;

@@ -1,17 +1,3 @@
-/**
- * TODO
- * - Create all interruptions
- * - Implement survey at the end that asks about cog. load
- *   - Have a way to save and download the results 
- * - Create proper work flow:
- *   - Ask user for his name 
- * - Track data
- *   - Tasks completed
- *   - cognitive load per round
- *   - block game score
- *   - what mode was active (HCI/Non)
- *   - others?
- */
 
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
@@ -20,7 +6,9 @@ const ctxNext = canvasNext.getContext('2d');
 var begin;
 
 var improved = false; // Whether or not we're showing the HCI "improvements"
+ANALYTICS.currentDataRow['improve_hci_enabled'] = 0;
 var interrupts = false; // Whether or not we're throwing interruptions at the user
+ANALYTICS.currentDataRow['interrupts_enabled'] = 0;
 
 // TODO: make 5 unique interruption classes and add here
 const interruptions = {
@@ -102,7 +90,8 @@ function handleKeyPress(event) {
     pause();
   }
   if (event.keyCode === KEY.ESC) {
-    gameOver();
+    // ANALYTICS.currentDataRow['got_game_over'] = 1;
+    // gameOver();
   } else if (moves[event.keyCode]) {
     event.preventDefault();
     // Get new state
@@ -145,6 +134,7 @@ function resetGame() {
 }
 
 function play() {
+  ANALYTICS.start();
   addEventListener();
   if (document.querySelector('#play-btn').style.display == '') {
     resetGame();
@@ -181,6 +171,7 @@ function animate(now = 0) {
 }
 
 function gameOver() {
+  ANALYTICS.end();
   cancelAnimationFrame(requestId);
   /**
    * TODO: 
@@ -195,13 +186,16 @@ function gameOver() {
 
 function toggleImproved() {
   improved = !improved;
+  ANALYTICS.currentDataRow['improve_hci_enabled'] = improved ? 1 : 0;
 }
 
 function toggleInterrupts() {
   interrupts = !interrupts;
+  ANALYTICS.currentDataRow['interrupts_enabled'] = interrupts ? 1 : 0;
 }
 
 function showInterruption() {
+  ANALYTICS.trackInterruption('start')
   let interruptionDiv = document.querySelector('#interruptions-container');
 
   // After the interruption slides on screen, focus the designated
@@ -238,6 +232,8 @@ function hideInterruption() {
   let interruptionDiv = document.querySelector('#interruptions-container');
   interruptionDiv.classList.remove('right-0');
   listenToKeys = true;
+
+  ANALYTICS.trackInterruption('stop');
 }
 
 function pause() {
