@@ -28,7 +28,7 @@ class ArrangementInterruption {
         })
         document.addEventListener('mousemove', (e) => {
             if (!this.isActive) { return; }
-            if (document.activeElement.title == 'rotate-btn') {return;}
+            if (document.activeElement.title == 'rotate-btn') { return; }
             if (this.mouseIsDown) {
                 let rect = this.div.getBoundingClientRect();
                 let deg;
@@ -103,9 +103,9 @@ class ArrangementInterruption {
                     } else {
                         degTextVal = degTextVal - 45;
                     }
-                // Do some gymnastics to find nearest counterclockwise
-                // multiple of 45
                 } else {
+                    // Do some gymnastics to find nearest counterclockwise
+                    // multiple of 45
                     let closestVal = 361;
                     this.validPositions.filter(p => p <= degTextVal).forEach(pos => {
                         if (Math.abs(degTextVal - pos) <= 45) {
