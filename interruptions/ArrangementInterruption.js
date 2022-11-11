@@ -8,6 +8,7 @@ class ArrangementInterruption {
         this.mouseIsDown = false;
         this.div = null;
         this.isActive = true;
+        this.validPositions = [0, 45, 90, 135, 180, 225, 270, 315, 360];
         this.init();
     }
 
@@ -27,6 +28,7 @@ class ArrangementInterruption {
         })
         document.addEventListener('mousemove', (e) => {
             if (!this.isActive) { return; }
+            if (document.activeElement.title == 'rotate-btn') {return;}
             if (this.mouseIsDown) {
                 let rect = this.div.getBoundingClientRect();
                 let deg;
@@ -63,7 +65,14 @@ class ArrangementInterruption {
         let content = `
             <div id="interruption-inner-container"
                 class="flex m-0 mx-auto justify-center align-center items-center h-full flex-col w-[400px] select-none">
-                <h1 class="text-center"><b>Rotate the rectangle ${this.targetAngle} degrees</b></h1>
+                <h1 class="text-center"><b>Rotate the box to ${this.targetAngle} degrees</b></h1>
+                ${this.improveUX ? `\
+                <button class='hover:shadow-lg copy-btn rounded-md bg-blue-600
+                    text-white mx-[5px] px-[8px] pb-[2px] mt-[5px] flex content-center align-center'\
+                    id='rotate-btn' title='rotate-btn'>
+                        Rotate to nearest 45deg
+                        <span class='material-icons' title='rotate-btn'>replay</span>
+                    </button>`: ""}
                 <div class="drag-rotate mt-[15px]">
                     <div class='w-[200px] h-[200px] border-2 border-zinc-300 flex items-center justify-center content-center rounded-full'>
                         <div id='resize-this' class='w-[75px] h-[75px] bg-zinc-500 rounded-md rotate-0'>
@@ -78,6 +87,44 @@ class ArrangementInterruption {
         `.trim()
 
         template.innerHTML = content;
+
+        // Setup a listener to handle rotation button
+        let buttons = template.content.querySelectorAll("#rotate-btn");
+        buttons.forEach(button => button.onclick = (e) => {
+            if (e.target.title == 'rotate-btn') {
+                this.div = document.querySelector('#resize-this');
+                this.degText = document.querySelector('#degree-text');
+                let degTextVal = Number(this.degText.innerText);
+                // Already a multiple of 45 so can just decrement by 45
+                if (degTextVal % 45 == 0) {
+                    // Handle rotations that should wrap around
+                    if (degTextVal - 45 < 0) {
+                        degTextVal = 360 + (degTextVal - 45);
+                    } else {
+                        degTextVal = degTextVal - 45;
+                    }
+                // Do some gymnastics to find nearest counterclockwise
+                // multiple of 45
+                } else {
+                    let closestVal = 361;
+                    this.validPositions.filter(p => p <= degTextVal).forEach(pos => {
+                        if (Math.abs(degTextVal - pos) <= 45) {
+                            closestVal = pos;
+                        }
+                    })
+                    degTextVal = closestVal;
+                }
+
+                this.div.style.transform = `rotate(${degTextVal}deg)`;
+                this.degText.innerText = degTextVal;
+                this.isActive = true;
+                if (degTextVal == this.targetAngle) {
+                    // See previous comment explaining 'isActive'...
+                    this.isActive = false;
+                    hideInterruption();
+                }
+            }
+        });
 
         return template;
     }
