@@ -33,19 +33,63 @@
         <canvas id="next" class="next"></canvas>
       </div>
       <div class="absolute left-[calc(50%-35px)] bottom-[25px]">
-        <button id="play-btn" onclick="play()" class="duration-500 border-2 border-zinc-200 w-[70px] h-[70px]
-          rounded-full shadow hover:shadow-xl">
-          Start</button>
-        <button id="pause-btn" onclick="pause()" class="duration-500  border-2 border-zinc-200 w-[70px] h-[70px]
-          rounded-full shadow hover:shadow-xl">
-          Pause</button>
-        <button id="play-btn" onclick="showInterruption()" class="duration-500 border-2 border-zinc-200 w-[70px] h-[70px]
-          rounded-full shadow hover:shadow-xl">
-          Int</button>
-        <button id="play-btn" onclick="ANALYTICS.exportAllData()" class="duration-500 border-2 border-zinc-200 w-[70px] h-[70px]
-          rounded-full shadow hover:shadow-xl">
-          Data</button>
       </div>
+
+    </div>
+  </div>
+
+  <div class="w-full border fixed bottom-[0px] flex items-center bg-white">
+    <!-- TODO: stop it with the absolute positioning... -->
+    <div class="m-[10px] mt-[15px]">
+      <label for="default-toggle-1" class="inline-flex relative items-center cursor-pointer">
+        <input type="checkbox" value="" id="default-toggle-1" class="sr-only peer" onchange="toggleImproved()">
+        <div
+          class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+        </div>
+        <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">UX</span>
+      </label>
+    </div>
+
+    <div class="m-[10px] mt-[15px]">
+      <label for="default-toggle-2" class="inline-flex relative items-center cursor-pointer">
+        <input type="checkbox" value="" id="default-toggle-2" class="sr-only peer" onchange="toggleInterrupts()">
+        <div
+          class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+        </div>
+        <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Tasks</span>
+      </label>
+    </div>
+
+    <div class="flex h-[35px]">
+
+      <button id="interrupt-btn" onclick="showInterruption()" class="hover:shadow-lg copy-btn rounded-md bg-gray-700 text-white
+          mx-[5px] px-[8px] pb-[2px] flex content-center align-center items-center">
+        Interrupt
+        <span class='material-icons ml-[5px]' title='rotate-btn'>assignment_late</span>
+      </button>
+
+      <button id="download-btn" onclick="ANALYTICS.exportAllData()" class="hover:shadow-lg copy-btn rounded-md bg-gray-700 text-white mx-[5px]
+          px-[8px] pb-[2px] flex content-center align-center items-center">
+        Download Data
+        <span class='material-icons ml-[5px]' title="download usage data">insert_chart</span>
+      </button>
+
+      <button id="play-btn" onclick="play()" class="hover:shadow-lg copy-btn
+          rounded-md bg-blue-600 text-white mx-[5px] px-[8px] 
+          flex content-center align-center items-center">
+        Start
+        <span class='material-icons ml-[5px]' title='rotate-btn'>play_circle</span>
+      </button>
+
+      <!-- <button id="pause-btn" onclick="pause()" class="hover:shadow-lg copy-btn
+      rounded-md bg-blue-600 text-white mx-[5px] px-[8px] 
+      flex content-center align-center items-center">
+        Pause
+        <span class='material-icons ml-[5px]' title='rotate-btn'>pause_circle</span>
+      </button> -->
+
+      <!-- this is a placeholder until pause button bugs are worked out -->
+      <span id="pause-btn" class="bg-transparent"></span>
 
     </div>
   </div>
@@ -57,26 +101,6 @@
     <button class="duration-500 border-2 w-[45px] h-[45px] absolute
       rounded-full shadow hover:shadow-xl bg-zinc-800 text-white right-[15px]
       top-[15px]" onclick="hideInterruption()">X</button>
-  </div>
-
-  <div class="absolute bottom-[10px] left-[10px]">
-    <label for="default-toggle-1" class="inline-flex relative items-center cursor-pointer">
-      <input type="checkbox" value="" id="default-toggle-1" class="sr-only peer" onchange="toggleImproved()">
-      <div
-        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
-      </div>
-      <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">UX</span>
-    </label>
-  </div>
-
-  <div class="absolute bottom-[10px] left-[100px]">
-    <label for="default-toggle-2" class="inline-flex relative items-center cursor-pointer">
-      <input type="checkbox" value="" id="default-toggle-2" class="sr-only peer" onchange="toggleInterrupts()">
-      <div
-        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
-      </div>
-      <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Tasks</span>
-    </label>
   </div>
 
   <!-- Toast for sending messages and such -->

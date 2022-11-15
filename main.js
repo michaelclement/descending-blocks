@@ -113,12 +113,12 @@ function handleKeyPress(event) {
       }
       board.piece.hardDrop();
     } else if (board.valid(p)) {
-      if (document.querySelector('#pause-btn').style.display === 'block') {
+      if (document.querySelector('#pause-btn').style.display === 'flex') {
         //
       }
       board.piece.move(p);
       if (event.keyCode === KEY.DOWN &&
-        document.querySelector('#pause-btn').style.display === 'block') {
+        document.querySelector('#pause-btn').style.display === 'flex') {
         account.score += POINTS.SOFT_DROP;
       }
     }
@@ -147,7 +147,7 @@ function play() {
 
   animate();
   document.querySelector('#play-btn').style.display = 'none';
-  // document.querySelector('#pause-btn').style.display = 'block';
+  document.querySelector('#pause-btn').style.display = 'flex';
 
   // Get start date/time for 5 minute round timer
   begin = new Date();
@@ -239,7 +239,7 @@ function hideInterruption() {
 function pause() {
   if (!requestId) {
     document.querySelector('#play-btn').style.display = 'none';
-    document.querySelector('#pause-btn').style.display = 'block';
+    // document.querySelector('#pause-btn').style.display = 'flex';
     animate();
     return;
   }
@@ -249,7 +249,7 @@ function pause() {
 
   // TODO: show a div in index.html that says "paused"
 
-  document.querySelector('#play-btn').style.display = 'block';
+  document.querySelector('#play-btn').style.display = 'flex';
   document.querySelector('#pause-btn').style.display = 'none';
 }
 
