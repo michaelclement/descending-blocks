@@ -97,7 +97,6 @@ class Analytics {
   addRowDataToCSV() {
     let row = [];
     Object.keys(this.currentDataRow).forEach(k => row.push(this.currentDataRow[k]));
-    console.log("Adding row: ", row);
     this.csv.push(row);
     // Clear current row data from JSON obj so we can track a new round
     Object.keys(this.currentDataRow).forEach(k => this.currentDataRow[k] = "");
