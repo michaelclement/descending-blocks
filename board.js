@@ -47,8 +47,8 @@ class Board {
       return false;
     }
     
-    // Every 45 ticks, interrupt the subject
-    if (this.tickCount % 45 == 0 && interrupts) {
+    // Every 35 ticks, interrupt the subject
+    if (this.tickCount % 35 == 0 && interrupts) {
       showInterruption(); 
     }
 
@@ -59,7 +59,7 @@ class Board {
       this.freeze();
       this.clearLines();
       if (this.piece.y === 0) {
-        toast("Game over.");
+        toast("Round over.");
         // Game over
         ANALYTICS.currentDataRow['got_game_over'] = 1;
         return false;
