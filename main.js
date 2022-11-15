@@ -133,9 +133,23 @@ function resetGame() {
   time = { start: performance.now(), elapsed: 0, level: LEVEL[account.level] };
 }
 
+function toggleProgressBar() {
+  // Kick off the progress bar (it's dumb, just a 5min css transition)
+  let bar = document.getElementById('progress-bar');
+  if (bar.classList.contains('progress-bar-empty')) {
+    bar.style.transitionDuration = '.1s';
+    bar.classList.remove('progress-bar-empty');
+  } else {
+    bar.style.transitionDuration = '300s';
+    bar.classList.add('progress-bar-empty');
+  }
+}
+
 function play() {
   ANALYTICS.start();
   addEventListener();
+  toast('Beginning round. Five minutes remain.')
+  toggleProgressBar()
   if (document.querySelector('#play-btn').style.display == '') {
     resetGame();
   }
@@ -172,6 +186,7 @@ function animate(now = 0) {
 
 function gameOver() {
   ANALYTICS.end();
+  toggleProgressBar()
   cancelAnimationFrame(requestId);
   /**
    * TODO: 

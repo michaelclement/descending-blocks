@@ -12,3 +12,10 @@
 #pause-btn {
   display: none;
 }
+
+#progress-bar {
+  transition-duration: .1s;
+}
+.progress-bar-empty {
+  width: 0% !important;
+}
