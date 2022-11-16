@@ -52,7 +52,7 @@ class TypingInterruption {
         let count = 0;
 
         allFields.forEach(field => {
-            let label = document.getElementById(`${field.id}-val`).querySelector('span').innerText;
+            let label = document.getElementById(`${field.id}-val`).querySelector('.btn-txt').innerText;
             if (field.value == label) {
                 count++;
             }
@@ -68,14 +68,17 @@ class TypingInterruption {
         choices.forEach((choice, i) => {
             retVal += `
             <div class="flex flex-row flex-wrap content-center align-center items-center mb-2 mt-2">
-              <label for="s${i}" id="s${i}-val" class="px-[7px] flex flex-row items-center
-              w-[110px] bg-zinc-500 text-white rounded-md m-0 mx-auto
-              p-[3px] flex justify-between"><span>${this.words[choice]}</span>
                 ${this.improveUX ? `\
-                  <button class='hover:shadow-lg copy-btn rounded-md bg-white text-zinc-500 mx-[5px] px-[8px] pb-[2px] flex content-center align-center'\
-                    title='${this.words[choice]}'>\
-                  <span class='material-icons' title='${this.words[choice]}'>content_copy</span>\
-                </button>` : ""}
+                    <button class='copy-btn px-[7px] flex flex-row items-center \
+                        w-[110px] bg-blue-500 text-white rounded-md m-0 mx-auto \
+                        p-[3px] flex justify-between' id='s${i}-val'\
+                        title='${this.words[choice]}'>
+                            <span class='btn-txt' title='${this.words[choice]}'>${this.words[choice]}</span>\
+                            <span class='material-icons' title='${this.words[choice]}'>content_copy</span>\
+                    </button>` : `\
+                    <label for="s${i}" id="s${i}-val" class="px-[7px] flex flex-row items-center \
+                    w-[110px] bg-zinc-500 text-white rounded-md m-0 mx-auto \
+                    p-[3px] flex justify-between"><span class="btn-txt">${this.words[choice]}</span>`}
               </label>
               ${this.improveUX ? `\
                 <button class='hover:shadow-lg paste-btn rounded-md text-zinc-500 mx-[5px] \
