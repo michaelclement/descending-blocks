@@ -81,7 +81,7 @@ class TypingInterruption {
                     p-[3px] flex justify-between"><span class="btn-txt">${this.words[choice]}</span>`}
               </label>
               ${this.improveUX ? `\
-                <button class='hover:shadow-lg paste-btn rounded-md text-zinc-500 mx-[5px] \
+                <button class='hover:shadow-lg paste-btn rounded-md text-blue-500 mx-[5px] \
                 px-[8px] pb-[2px] flex content-center align-center' title='s${i}'>\
                 <span class='material-icons' title='s${i}'>content_paste</span>\
                 </button>` : ""}
@@ -89,6 +89,7 @@ class TypingInterruption {
                      type="text"
                      oninput="updateVal(this)"
                      class="w-[calc(100%-180px)] border border-zinc-500 rounded-md mx-[10px] ${i == 0 ? 'focus-this' : ''}">
+            </div>
             `
         });
         return retVal;
