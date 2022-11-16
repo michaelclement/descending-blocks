@@ -3,6 +3,7 @@ class Board {
     this.ctx = ctx;
     this.ctxNext = ctxNext;
     this.tickCount = 0;
+    this.interruptReady = false;
     this.init();
   }
 
@@ -47,10 +48,8 @@ class Board {
       return false;
     }
     
-    // Every 35 ticks, interrupt the subject
-    if (this.tickCount % 35 == 0 && interrupts) {
-      showInterruption(); 
-    }
+    // Every 35 ticks, flag that we're ready for interruption
+    this.interruptReady = (this.tickCount % 35 == 0 && interrupts) ? true: false;
 
     let p = moves[KEY.DOWN](this.piece);
     if (this.valid(p)) {
@@ -69,6 +68,7 @@ class Board {
       this.piece.setStartingPosition();
       this.getNewPiece();
     }
+    this.interruptReady ? showInterruption(): false;
     return true;
   }
 
@@ -93,13 +93,13 @@ class Board {
 
       account.score += this.getLinesClearedPoints(lines);
       account.lines += lines;
+      ANALYTICS.currentDataRow["lines_cleared"]++;
 
       // If we have reached the lines for next level
       if (account.lines >= LINES_PER_LEVEL) {
         // Goto next level
         account.level++;
 
-        ANALYTICS.currentDataRow["lines_cleared"] += account.lines;
         // Remove lines so we start working for the next level
         account.lines -= LINES_PER_LEVEL;
 

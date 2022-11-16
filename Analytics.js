@@ -55,6 +55,7 @@ class Analytics {
     this.csv[0].forEach(k => this.currentDataRow[k] = "")
     this.currentDataRow['cluster_id'] = this.clusterId;
     this.currentDataRow['round_id'] = this.roundId;
+    this.currentDataRow['lines_cleared'] = 0;
   }
 
   // Called when round begins
