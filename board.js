@@ -99,6 +99,7 @@ class Board {
         // Goto next level
         account.level++;
 
+        ANALYTICS.currentDataRow["lines_cleared"] += account.lines;
         // Remove lines so we start working for the next level
         account.lines -= LINES_PER_LEVEL;
 

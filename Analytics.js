@@ -73,7 +73,6 @@ class Analytics {
       this.currentDataRow['round_over_at']
     )
 
-    this.currentDataRow['lines_cleared'] = account.lines;
     this.currentDataRow['game_score'] = account.score;
 
     // TODO: add check to make sure their input is valid?
