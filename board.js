@@ -182,7 +182,7 @@ class Board {
         : lines === 3
         ? POINTS.TRIPLE
         : lines === 4
-        ? POINTS.TETRIS
+        ? POINTS.BETRIS
         : 0;
     return (account.level + 1) * lineClearPoints;
   }
