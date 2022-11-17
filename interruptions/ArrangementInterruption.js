@@ -98,11 +98,7 @@ class ArrangementInterruption {
                 // Already a multiple of 45 so can just decrement by 45
                 if (degTextVal % 45 == 0) {
                     // Handle rotations that should wrap around
-                    if (degTextVal - 45 < 0) {
-                        degTextVal = 360 + (degTextVal - 45);
-                    } else {
-                        degTextVal = degTextVal - 45;
-                    }
+                    degTextVal = degTextVal - 45 < 0 ? 360 + (degTextVal - 45): degTextVal - 45;
                 } else {
                     // Do some gymnastics to find nearest counterclockwise
                     // multiple of 45
