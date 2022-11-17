@@ -70,25 +70,25 @@ class TypingInterruption {
             <div class="flex flex-row flex-wrap content-center align-center items-center mb-2 mt-2">
                 ${this.improveUX ? `\
                     <button class='copy-btn px-[7px] flex flex-row items-center \
-                        w-[110px] bg-blue-500 text-white rounded-md m-0 mx-auto \
+                        w-[110px] bg-blue-600 text-white rounded-md m-0 mx-auto \
                         p-[3px] flex justify-between' id='s${i}-val'\
                         title='${this.words[choice]}'>
                             <span class='btn-txt' title='${this.words[choice]}'>${this.words[choice]}</span>\
                             <span class='material-icons' title='${this.words[choice]}'>content_copy</span>\
                     </button>` : `\
                     <label for="s${i}" id="s${i}-val" class="px-[7px] flex flex-row items-center \
-                    w-[110px] bg-zinc-500 text-white rounded-md m-0 mx-auto \
+                    w-[110px] bg-gray-700 text-white rounded-md m-0 mx-auto \
                     p-[3px] flex justify-between"><span class="btn-txt">${this.words[choice]}</span>`}
               </label>
               ${this.improveUX ? `\
-                <button class='hover:shadow-lg paste-btn rounded-md text-blue-500 mx-[5px] \
+                <button class='hover:shadow-lg paste-btn rounded-md text-blue-600 mx-[5px] \
                 px-[8px] pb-[2px] flex content-center align-center' title='s${i}'>\
                 <span class='material-icons' title='s${i}'>content_paste</span>\
                 </button>` : ""}
               <input id="s${i}" 
                      type="text"
                      oninput="updateVal(this)"
-                     class="w-[calc(100%-180px)] border border-zinc-500 rounded-md mx-[10px] ${i == 0 ? 'focus-this' : ''}">
+                     class="w-[calc(100%-180px)] border border-gray-700 rounded-md mx-[10px] ${i == 0 ? 'focus-this' : ''}">
             </div>
             `
         });

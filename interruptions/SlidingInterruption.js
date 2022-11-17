@@ -72,8 +72,8 @@ class SlidingInterruption {
         <input id="s${i}" 
                type="range"
                value="0" 
-               class="w-[calc(100%-50px)] h-2 bg-zinc-800 rounded-lg appearance-none cursor-pointer">
-        <label for="s${i}" id="s${i}-val" class="w-[50px] h-[30px] block text-sm font-medium text-zinc-800 flex items-center justify-center">0</label>
+               class="w-[calc(100%-50px)] h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
+        <label for="s${i}" id="s${i}-val" class="w-[50px] h-[30px] block text-sm font-medium text-gray-700 flex items-center justify-center">0</label>
       </div>
     `
     }

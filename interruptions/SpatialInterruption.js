@@ -78,7 +78,7 @@ class SpatialInterruption {
         for (let i = 1; i < 10; i++) {
             retVal += `
             <button class="px-[7px] flex flex-row justify-center w-[120px] 
-              ${this.improveUX ? (i % this.step == 0 ? 'bg-blue-600':'bg-zinc-500') : 'bg-zinc-500'} 
+              ${this.improveUX ? (i % this.step == 0 ? 'bg-blue-600':'bg-gray-700') : 'bg-gray-700'} 
               text-white rounded-md m-[5px] p-[3px] border-2 border-transparent
               hover:border-black" title="${i}" id="btn-${i}">
               <span class='material-icons' title='${i}'>thumb_up</span>\

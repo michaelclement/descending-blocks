@@ -95,7 +95,7 @@ class LongestWordInterruption {
 
         choices.forEach((choice, i) => {
             retVal += `
-            <button class="px-[7px] flex flex-row justify-center w-[120px] bg-zinc-500
+            <button class="px-[7px] flex flex-row justify-center w-[120px] bg-gray-700
               text-white rounded-md m-[5px] p-[3px] word-btn">${this.words[choice]}
             </button>`
         });

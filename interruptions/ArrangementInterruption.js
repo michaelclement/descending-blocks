@@ -74,14 +74,14 @@ class ArrangementInterruption {
                         <span class='material-icons' title='rotate-btn'>replay</span>
                     </button>`: ""}
                 <div class="drag-rotate mt-[15px]">
-                    <div class='w-[200px] h-[200px] border-2 border-zinc-300 flex items-center justify-center content-center rounded-full'>
-                        <div id='resize-this' class='w-[75px] h-[75px] bg-zinc-500 rounded-md rotate-0'>
-                            <span class='material-icons absolute text-blue-500 cursor-pointer mt-[-40px] ml-[calc(50%_-_12px)]' id='handle'>
+                    <div class='w-[200px] h-[200px] border-2 border-gray-300 flex items-center justify-center content-center rounded-full'>
+                        <div id='resize-this' class='w-[75px] h-[75px] bg-gray-700 rounded-md rotate-0'>
+                            <span class='material-icons absolute text-blue-600 cursor-pointer mt-[-40px] ml-[calc(50%_-_12px)]' id='handle'>
                                 arrow_upward
                             </span>
                         </div>
                     </div>
-                    <p class='text-zinc-500 w-full text-center' id='degree-text'>0</p>
+                    <p class='text-gray-700 w-full text-center' id='degree-text'>0</p>
                 </div>
             </div>
         `.trim()
