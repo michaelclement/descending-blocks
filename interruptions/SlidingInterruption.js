@@ -19,7 +19,7 @@ class SlidingInterruption {
          <h1 class="text-center"><b>Set all sliders to ${this.targetValue}</b></h1>
          <p class="text-center"><i>Up/Down arrow keys can be used to change value</i></p>
          ${this.improveUX ? "\
-         <div class='flex flex-row items-center align-center w-[115px] bg-zinc-500 rounded-md text-white m-0 mx-auto mt-[15px]'>\
+         <div class='flex flex-row items-center align-center w-[115px] bg-blue-600 rounded-md text-white m-0 mx-auto mt-[15px]'>\
           <input name='link-checkbox' id='link-checkbox' class='mx-[5px]' type='checkbox' />\
           <label for='link-checkbox'>Link sliders</label>\
         </div>": ''}
