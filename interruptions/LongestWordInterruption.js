@@ -51,7 +51,7 @@ class LongestWordInterruption {
     }
 
     checkVal(e) {
-        if (e.target.id == 'sort-words-btn') {
+        if (e.target.classList.contains('sort-btn')) {
             // Flip ascending/descending sort order each time we click to sort
             // this.isAscending = !this.isAscending;
 
@@ -79,9 +79,12 @@ class LongestWordInterruption {
     buildInputs() {
         let retVal = `
             ${this.improveUX ? `\
-            <button class='hover:shadow-lg copy-btn rounded-md bg-blue-600
+                <button class='hover:shadow-lg rounded-md bg-blue-600 sort-btn
                 text-white mx-[5px] px-[8px] pb-[2px] mt-[5px] flex content-center align-center'\
-                title='Toggle sort' id='sort-words-btn'>Sort by length</button>` : ""}
+                id='sort-words-btn' title='Toggle sort'>
+                    Sort by length
+                    <span class='material-icons sort-btn' title='sort-btn'>sort</span>
+                </button>`: ""}
             <div class="flex flex-col flex-wrap mb-2 mt-2 w-[280px] h-[130px] align-center" id="word-btn-container">`;
 
         let choices = Array.from(Array(6)).map(x => Math.floor(Math.random() * this.words.length));
