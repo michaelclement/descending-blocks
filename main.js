@@ -134,7 +134,7 @@ function resetGame() {
 }
 
 function toggleProgressBar() {
-  // Kick off the progress bar (it's dumb, just a 5min css transition)
+  // Kick off the progress bar (it's dumb, just a 5 minute css transition)
   let bar = document.getElementById('progress-bar');
   if (bar.classList.contains('progress-bar-empty')) {
     bar.style.transitionDuration = '.1s';
