@@ -76,13 +76,16 @@ class Analytics {
 
     this.currentDataRow['game_score'] = account.score;
 
-    // TODO: add check to make sure their input is valid?
-    this.currentDataRow['cognitive_load'] = prompt(
-      "Please rate your cognitive load on a scale from 1-10 following \
-      the previous round of tasks.\
-      \n1: very very low cognitive load or effort\
-      \n10: extreme cognitive load or effort"
-    );
+    var selection = '';
+    do {
+      selection = parseInt(window.prompt(
+        "Please rate your cognitive load on a scale from 1-10 following \
+        the previous round of tasks.\
+        \n1: very very low cognitive load or effort\
+        \n10: extreme cognitive load or effort",
+        ""), 10);
+    } while (isNaN(selection) || selection > 10 || selection < 1);
+    this.currentDataRow['cognitive_load'] = selection;
 
     this.addRowDataToCSV();
   }
