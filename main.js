@@ -10,7 +10,6 @@ ANALYTICS.currentDataRow['improve_hci_enabled'] = 0;
 var interrupts = false; // Whether or not we're throwing interruptions at the user
 ANALYTICS.currentDataRow['interrupts_enabled'] = 0;
 
-// TODO: make 5 unique interruption classes and add here
 const interruptions = {
   0: SlidingInterruption,
   1: TypingInterruption,
@@ -188,14 +187,6 @@ function gameOver() {
   ANALYTICS.end();
   toggleProgressBar()
   cancelAnimationFrame(requestId);
-  /**
-   * TODO: 
-   * - Ask user for cognitive load number
-   * - Update relevant data stores with numbers from this round
-   * - Update round counter, reset game board, reset timer, etc
-   */
-  // checkHighScore(account.score);
-  // document.querySelector('#pause-btn').style.display = 'none';
   document.querySelector('#play-btn').style.display = '';
 }
 
@@ -261,8 +252,6 @@ function pause() {
 
   cancelAnimationFrame(requestId);
   requestId = null;
-
-  // TODO: show a div in index.html that says "paused"
 
   document.querySelector('#play-btn').style.display = 'flex';
   document.querySelector('#pause-btn').style.display = 'none';

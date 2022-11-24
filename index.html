@@ -127,11 +127,6 @@
     // Warn before closing tab or reloading page
     window.onbeforeunload = function (e) {
       e = e || window.event;
-
-      // TODO:
-      // Add stuff here for collecting metrics,
-      // downloading CSV, etc
-
       // For Safari
       return 'Sure?';
     };
