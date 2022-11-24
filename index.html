@@ -32,14 +32,10 @@
         <p>Next Piece: <span class="font-mono"></span></p>
         <canvas id="next" class="next"></canvas>
       </div>
-      <div class="absolute left-[calc(50%-35px)] bottom-[25px]">
-      </div>
-
     </div>
   </div>
 
   <div class="w-full border fixed bottom-[0px] flex items-center bg-white">
-    <!-- TODO: stop it with the absolute positioning... -->
     <div class="m-[10px] mt-[15px]">
       <label for="default-toggle-1" class="inline-flex relative items-center cursor-pointer">
         <input type="checkbox" value="" id="default-toggle-1" class="sr-only peer" onchange="toggleImproved()">
@@ -94,7 +90,7 @@
     </div>
   </div>
 
-  <div class="w-full border-2 fixed bottom-[0px] border-blue-600 duration-[300s]" id="progress-bar"></div>
+  <div class="w-full border-2 fixed bottom-[0px] border-blue-600 duration-[300s] ease-linear" id="progress-bar"></div>
 
   <!-- This will hold the interruptions: -->
   <div id="interruptions-container" class="
