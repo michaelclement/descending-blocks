@@ -201,7 +201,6 @@ function toggleInterrupts() {
 }
 
 function showInterruption() {
-  ANALYTICS.trackInterruption('start')
   let interruptionDiv = document.querySelector('#interruptions-container');
 
   // After the interruption slides on screen, focus the designated
@@ -232,6 +231,8 @@ function showInterruption() {
   let nextInt = orderOfInterruptions.pop();
   let interruption = improved ? new interruptions[nextInt](true) : new interruptions[nextInt];
   interruptionDiv.appendChild(interruption.html.content.firstChild);
+  ANALYTICS.currentInterruptionName = interruption.name;
+  ANALYTICS.trackInterruption('start', interruption.name);
 }
 
 function hideInterruption() {
@@ -239,7 +240,7 @@ function hideInterruption() {
   interruptionDiv.classList.remove('right-0');
   listenToKeys = true;
 
-  ANALYTICS.trackInterruption('stop');
+  ANALYTICS.trackInterruption('stop', ANALYTICS.currentInterruptionName); 
 }
 
 function pause() {

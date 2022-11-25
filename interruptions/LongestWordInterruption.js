@@ -10,7 +10,7 @@ class LongestWordInterruption {
         this.targetOptions = ["longest", "shortest"];
         this.targetLength; // will either be "longest" or "shortest"
         this.isAscending = false;
-
+        this.name = 'longest_word'
         this.init();
     }
 

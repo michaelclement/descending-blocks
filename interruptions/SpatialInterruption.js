@@ -7,7 +7,7 @@ class SpatialInterruption {
         // buttons the user must click
         this.step = Math.floor(Math.random() * 4) + 1;
         this.improveUX = improveUX; // Used to determine if we include HCI improvements
-
+        this.name = 'spatial';
         this.init();
     }
 

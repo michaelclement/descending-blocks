@@ -5,6 +5,7 @@ class TypingInterruption {
         this.improveUX = improveUX; // Used to determine if we include HCI improvements
         this.words = ["apple", "orange", "apricot", "banana", "acorn", "squash"];
         this.clipboard = '';
+        this.name = 'typing';
         this.init();
     }
 

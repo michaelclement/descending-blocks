@@ -1,22 +1,4 @@
-/**
- * Data to track:
- *  X cluster_id: (should be int indicating which grouping of 3 runs it belongs to)
- *  X round_id: incrementing int ID. This should be incremented any time we click "start"
- *  X round_duration: duration of round in seconds (floating point)
- *  X round_start_at: ISO date string of moment "start" was pressed
- *  X got_game_over: boolean (1/0) indicating failure at block game
- *  X round_over_at: ISO date string of moment user failed block game
- *  X num_interruptions_complete: int counter indicating how many successful interruptions occured (tie to hideInterruptions)
- *  X total_int_time_to_complete: total time spent doing interruptions
- *  X avg_int_time_to_complete: average duration of interruptions in seconds (calculated in JS as each interruption finishes)
- *  X last_int_completed_at: ISO date string of moment interruption was successfully completed
- *  X cognitive_load: int from 0-9 or 1-10 entered by the user at end of each round
- *  X lines_cleared: num of lines from block game use successfully cleared
- *  X game_score: game score from block game (not important, but may be helpful?)
- *  X improve_hci_enabled: boolean (1/0) 
- *  X interrupts_enabled: boolean (1/0) 
- */
-
+// NOTE: All dates/times should be stored as ISO strings.
 class Analytics {
   constructor() {
     // Random large(ish) number, essentially a session identifier.
@@ -27,26 +9,50 @@ class Analytics {
     // Initialize the CSV + header row
     this.csv = [
       [
+        // Int indicating which grouping of 3 runs it belongs to
         "cluster_id",
+        // Int incremented any time we click "start"
         "round_id",
         "round_duration",
         "round_start_at",
         "got_game_over",
         "round_over_at",
-        "num_interruptions_complete",
-        "total_int_time_to_complete",
-        "avg_int_time_to_complete",
         "last_int_completed_at",
         "cognitive_load",
         "lines_cleared",
         "game_score",
         "improve_hci_enabled",
         "interrupts_enabled",
+        // -------------------------------------------------- //
+        // Total num/time/and avg of all interrupts
+        "global_int_completed",
+        "global_int_total_time",
+        "global_int_avg_time",
+        // Track num times individual interruption was completed
+        "arrangement_completed", 
+        "longest_word_completed",
+        "sliding_completed",
+        "spatial_completed",
+        "typing_completed",
+        // Track total time spent performing a given interrupt
+        "arrangement_total_time", 
+        "longest_word_total_time",
+        "sliding_total_time",
+        "spatial_total_time",
+        "typing_total_time",
+        // Track avg time spent performing a specific int
+        "arrangement_avg_time", 
+        "longest_word_avg_time",
+        "sliding_avg_time",
+        "spatial_avg_time",
+        "typing_avg_time",
+        // -------------------------------------------------- //
       ]
     ]
     this.currentDataRow = {}
     this.currentInterruptionStartTime;
     this.currentInterruptionEndTime;
+    this.currentInterruptionName;
     this.init();
   }
   init() {
@@ -106,35 +112,47 @@ class Analytics {
     this.currentDataRow['cluster_id'] = this.clusterId;
   }
 
-  trackInterruption(startOrStop) {
+  /**
+   * Function to track counts and durations of interruptions, both
+   * global and specific.
+   * 
+   * @param {String} startOrStop 'start' indicates we want to begin tracking.
+   * any other value indicates we want to stop the current tracking.
+   * @param {String} intName string name of a given interruption.
+   */
+  trackInterruption(startOrStop, intName) {
+    if (intName == undefined) {return;}
     if (startOrStop == 'start') {
       this.currentInterruptionStartTime = new Date().toISOString();
     } else {
       this.currentInterruptionEndTime = new Date().toISOString();
-      this.updateIntDurationAvg(this.getTimeDiffInSeconds(
+      let duration = this.getTimeDiffInSeconds(
         this.currentInterruptionStartTime,
         this.currentInterruptionEndTime
-      ))
+      )
+      this.updateIntDurationAvg(duration, 'global_int');
+      this.updateIntDurationAvg(duration, intName);
       this.currentDataRow['last_int_completed_at'] = this.currentInterruptionEndTime;
     }
   }
 
   /**
-   * Update overall average time per interruption
+   * Update time data for a specific interruption.
    * 
-   * @param {Float} intDuration the number of seconds the latest interruption took
-   * to complete
+   * @param {Float} intDuration the number of seconds this interruption took
+   * to complete 
+   * @param {String} intName the name of the specific interruption
    */
-  updateIntDurationAvg(intDuration) {
-    let a = this.currentDataRow['total_int_time_to_complete'];
-    let b = this.currentDataRow['num_interruptions_complete'];
+  updateIntDurationAvg(intDuration, intName) {
+    let tt = this.currentDataRow[`${intName}_total_time`];
+    let c = this.currentDataRow[`${intName}_completed`];
 
-    a = a == "" ? intDuration : a + intDuration;
-    b = b == "" ? 1 : b += 1;
+    tt = tt == "" ? intDuration : tt + intDuration;
+    c = c == "" ? 1 : c += 1;
 
-    this.currentDataRow['total_int_time_to_complete'] = a;
-    this.currentDataRow['avg_int_time_to_complete'] = a / b;
-    this.currentDataRow['num_interruptions_complete'] = b;
+    this.currentDataRow[`${intName}_total_time`] = tt;
+    this.currentDataRow[`${intName}_completed`] = c;
+    this.currentDataRow[`${intName}_avg_time`] = tt / c;
   }
 
   /**
