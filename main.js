@@ -146,6 +146,11 @@ function toggleProgressBar() {
 
 function play() {
   ANALYTICS.start();
+  // Toggle hci/interrupts flags twice. Hack to ensure their current
+  // status shows up in the CSV. (otherwise, between rounds it gets
+  // saved as an empty string for some reason) TODO: investigate root cause
+  [0, 1].forEach(i => {toggleImproved(); toggleInterrupts();})
+
   addEventListener();
   toast('Beginning round. Five minutes remain.')
   toggleProgressBar()
