@@ -1,7 +1,28 @@
+
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
 const canvasNext = document.getElementById('next');
 const ctxNext = canvasNext.getContext('2d');
+var begin;
+
+var improved = false; // Whether or not we're showing the HCI "improvements"
+ANALYTICS.currentDataRow['improve_hci_enabled'] = 0;
+var interrupts = false; // Whether or not we're throwing interruptions at the user
+ANALYTICS.currentDataRow['interrupts_enabled'] = 0;
+
+const interruptions = {
+  0: SlidingInterruption,
+  1: TypingInterruption,
+  2: LongestWordInterruption,
+  3: SpatialInterruption,
+  4: ArrangementInterruption,
+}
+
+// Create a shuffled array of the interruption index keys,
+// this determines the random order they will be fed to user
+var orderOfInterruptions = shuffleArray([0, 1, 2, 3, 4]);
+
+var listenToKeys = true; // Disable when user is being interrupted
 
 let accountValues = {
   score: 0,
@@ -39,7 +60,16 @@ const moves = {
 let board = new Board(ctx, ctxNext);
 
 initNext();
-showHighScores();
+
+// Function to shuffle an array, used to determine order of interruptions
+// Modified from here: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array#answer-12646864
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+  };
+  return array;
+}
 
 function initNext() {
   // Calculate size of canvas from constants.
@@ -54,23 +84,27 @@ function addEventListener() {
 }
 
 function handleKeyPress(event) {
+  if (!listenToKeys) { return } // Don't do anything on keypress
   if (event.keyCode === KEY.P) {
     pause();
   }
   if (event.keyCode === KEY.ESC) {
-    gameOver();
+    // ANALYTICS.currentDataRow['got_game_over'] = 1;
+    // gameOver();
   } else if (moves[event.keyCode]) {
     event.preventDefault();
     // Get new state
     let p = moves[event.keyCode](board.piece);
     if (event.keyCode === KEY.SPACE) {
-      // Hard drop
-      if (document.querySelector('#pause-btn').style.display === 'block') {
-          dropSound.play();
-      }else{
+      // // We don't use the pause button, but leaving this here just in case:
+      // if (document.querySelector('#pause-btn').style.display === 'block') {
+      // // Hard drop
+      if (document.querySelector('#play-btn').style.display === 'none') {
+        // We're playing...
+      } else {
         return;
       }
-      
+
       while (board.valid(p)) {
         account.score += POINTS.HARD_DROP;
         board.piece.move(p);
@@ -78,12 +112,12 @@ function handleKeyPress(event) {
       }
       board.piece.hardDrop();
     } else if (board.valid(p)) {
-      if (document.querySelector('#pause-btn').style.display === 'block') {
-        movesSound.play();
+      if (document.querySelector('#pause-btn').style.display === 'flex') {
+        //
       }
       board.piece.move(p);
-      if (event.keyCode === KEY.DOWN && 
-          document.querySelector('#pause-btn').style.display === 'block') {
+      if (event.keyCode === KEY.DOWN &&
+        document.querySelector('#pause-btn').style.display === 'flex') {
         account.score += POINTS.SOFT_DROP;
       }
     }
@@ -98,8 +132,28 @@ function resetGame() {
   time = { start: performance.now(), elapsed: 0, level: LEVEL[account.level] };
 }
 
+function toggleProgressBar() {
+  // Kick off the progress bar (it's dumb, just a 5 minute css transition)
+  let bar = document.getElementById('progress-bar');
+  if (bar.classList.contains('progress-bar-empty')) {
+    bar.style.transitionDuration = '.1s';
+    bar.classList.remove('progress-bar-empty');
+  } else {
+    bar.style.transitionDuration = '300s';
+    bar.classList.add('progress-bar-empty');
+  }
+}
+
 function play() {
+  ANALYTICS.start();
+  // Toggle hci/interrupts flags twice. Hack to ensure their current
+  // status shows up in the CSV. (otherwise, between rounds it gets
+  // saved as an empty string for some reason) TODO: investigate root cause
+  [0, 1].forEach(i => {toggleImproved(); toggleInterrupts();})
+
   addEventListener();
+  toast('Beginning round. Five minutes remain.')
+  toggleProgressBar()
   if (document.querySelector('#play-btn').style.display == '') {
     resetGame();
   }
@@ -111,8 +165,10 @@ function play() {
 
   animate();
   document.querySelector('#play-btn').style.display = 'none';
-  document.querySelector('#pause-btn').style.display = 'block';
-  backgroundSound.play();
+  document.querySelector('#pause-btn').style.display = 'flex';
+
+  // Get start date/time for 5 minute round timer
+  begin = new Date();
 }
 
 function animate(now = 0) {
@@ -133,42 +189,78 @@ function animate(now = 0) {
 }
 
 function gameOver() {
+  ANALYTICS.end();
+  toggleProgressBar()
   cancelAnimationFrame(requestId);
-
-  ctx.fillStyle = 'black';
-  ctx.fillRect(1, 3, 8, 1.2);
-  ctx.font = '1px Arial';
-  ctx.fillStyle = 'red';
-  ctx.fillText('GAME OVER', 1.8, 4);
-  
-  sound.pause();
-  finishSound.play();
-  checkHighScore(account.score);
-
-  document.querySelector('#pause-btn').style.display = 'none';
   document.querySelector('#play-btn').style.display = '';
+}
+
+function toggleImproved() {
+  improved = !improved;
+  ANALYTICS.currentDataRow['improve_hci_enabled'] = improved ? 1 : 0;
+}
+
+function toggleInterrupts() {
+  interrupts = !interrupts;
+  ANALYTICS.currentDataRow['interrupts_enabled'] = interrupts ? 1 : 0;
+}
+
+function showInterruption() {
+  let interruptionDiv = document.querySelector('#interruptions-container');
+
+  // After the interruption slides on screen, focus the designated
+  // element (i.e. first text box or whatever)
+  interruptionDiv.addEventListener('transitionend', (event) => {
+    try {
+      let a = document.querySelector('.focus-this');
+      a.focus();
+      // Remove the focus-this class so dismissing works properly
+      a.classList.remove('focus-this');
+    } catch (e) {
+      console.warn(e);
+    }
+  })
+
+  // It's still on screen
+  if (interruptionDiv.classList.contains("right-0")) { return; }
+
+  interruptionDiv.innerHTML = ""; // Clear any previous content
+  interruptionDiv.classList.add('right-0');
+  listenToKeys = false;
+
+  // Make sure we have a freshly shuffled list of interruptions if we've run out
+  orderOfInterruptions = orderOfInterruptions.length == 0 ?
+    shuffleArray([0, 1, 2, 3, 4]) : orderOfInterruptions;
+  
+  // Pick a random interruption from 0-4
+  let nextInt = orderOfInterruptions.pop();
+  let interruption = improved ? new interruptions[nextInt](true) : new interruptions[nextInt];
+  interruptionDiv.appendChild(interruption.html.content.firstChild);
+  ANALYTICS.currentInterruptionName = interruption.name;
+  ANALYTICS.trackInterruption('start', interruption.name);
+}
+
+function hideInterruption() {
+  let interruptionDiv = document.querySelector('#interruptions-container');
+  interruptionDiv.classList.remove('right-0');
+  listenToKeys = true;
+
+  ANALYTICS.trackInterruption('stop', ANALYTICS.currentInterruptionName); 
 }
 
 function pause() {
   if (!requestId) {
     document.querySelector('#play-btn').style.display = 'none';
-    document.querySelector('#pause-btn').style.display = 'block';
+    // document.querySelector('#pause-btn').style.display = 'flex';
     animate();
-    backgroundSound.play();
     return;
   }
 
   cancelAnimationFrame(requestId);
   requestId = null;
 
-  ctx.fillStyle = 'black';
-  ctx.fillRect(1, 3, 8, 1.2);
-  ctx.font = '1px Arial';
-  ctx.fillStyle = 'yellow';
-  ctx.fillText('PAUSED', 3, 4);
-  document.querySelector('#play-btn').style.display = 'block';
+  document.querySelector('#play-btn').style.display = 'flex';
   document.querySelector('#pause-btn').style.display = 'none';
-  sound.pause();
 }
 
 function showHighScores() {
@@ -198,4 +290,17 @@ function saveHighScore(score, highScores) {
   highScores.splice(NO_OF_HIGH_SCORES);
 
   localStorage.setItem('highScores', JSON.stringify(highScores));
+}
+
+function toast(msg) {
+  let toast = document.getElementById('toast-default');
+  document.getElementById("toast-text").innerText = msg;
+
+  toast.classList.remove("opacity-0");
+  toast.classList.add("opacity-1");
+
+  setTimeout(() => {
+    toast.classList.remove("opacity-1");
+    toast.classList.add("opacity-0");
+  }, 5000);
 }

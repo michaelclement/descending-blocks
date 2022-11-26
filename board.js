@@ -2,6 +2,8 @@ class Board {
   constructor(ctx, ctxNext) {
     this.ctx = ctx;
     this.ctxNext = ctxNext;
+    this.tickCount = 0;
+    this.interruptReady = false;
     this.init();
   }
 
@@ -34,6 +36,21 @@ class Board {
   }
 
   drop() {
+    // This function is called every game tick, so using it to 
+    // keep track of how many ticks have elapsed/when to trigger
+    // interruptions.
+    this.tickCount++;
+
+    // If it's been about 5 minutes, stop the game
+    if (Math.floor(((new Date() - begin)/1000)/60) >= 5) {
+      toast("Time limit reached.");
+      ANALYTICS.currentDataRow['got_game_over'] = 0;
+      return false;
+    }
+    
+    // Every 35 ticks, flag that we're ready for interruption
+    this.interruptReady = (this.tickCount % 35 == 0 && interrupts) ? true: false;
+
     let p = moves[KEY.DOWN](this.piece);
     if (this.valid(p)) {
       this.piece.move(p);
@@ -41,7 +58,9 @@ class Board {
       this.freeze();
       this.clearLines();
       if (this.piece.y === 0) {
+        toast("Round over.");
         // Game over
+        ANALYTICS.currentDataRow['got_game_over'] = 1;
         return false;
       }
       this.piece = this.next;
@@ -49,6 +68,7 @@ class Board {
       this.piece.setStartingPosition();
       this.getNewPiece();
     }
+    this.interruptReady ? showInterruption(): false;
     return true;
   }
 
@@ -73,6 +93,7 @@ class Board {
 
       account.score += this.getLinesClearedPoints(lines);
       account.lines += lines;
+      ANALYTICS.currentDataRow["lines_cleared"]++;
 
       // If we have reached the lines for next level
       if (account.lines >= LINES_PER_LEVEL) {
@@ -161,9 +182,8 @@ class Board {
         : lines === 3
         ? POINTS.TRIPLE
         : lines === 4
-        ? POINTS.TETRIS
+        ? POINTS.BETRIS
         : 0;
-    pointsSound.play();
     return (account.level + 1) * lineClearPoints;
   }
 }

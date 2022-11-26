@@ -5,16 +5,7 @@ const ROWS = 20;
 const BLOCK_SIZE = 30;
 const LINES_PER_LEVEL = 10;
 const NO_OF_HIGH_SCORES = 10;
-const COLORS = [
-  'none',
-  'cyan',
-  'blue',
-  'orange',
-  'yellow',
-  'green',
-  'purple',
-  'red'
-];
+const COLORS = ['', '', '', '', '', '', '', ''];
 
 const SHAPES = [
   [],
@@ -44,7 +35,7 @@ const POINTS = {
   SINGLE: 100,
   DOUBLE: 300,
   TRIPLE: 500,
-  TETRIS: 800,
+  BETRIS: 800,
   SOFT_DROP: 1,
   HARD_DROP: 2,
 };

@@ -1,51 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>JavaScript Tetris</title>
-    <meta property="og:title" content="JavaScript Tetris" />
-    <meta name="description" content="Tetris game made with modern JavaScript." />
-    <meta name="twitter:description" content="Tetris game made with modern Javascript." />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@melcor76" />
-    <meta name="keywords" content="JavaScript, Tetris" />
-    <meta name="author" content="Michael Karén" />
-    <meta
-      property="og:image"
-      content="https://focused-mestorf-930f82.netlify.com/assets/share-image.png"
-    />
-    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="styles.css" />
-  </head>
-  <body>
-    <div class="grid">
-      <div class="left-column">
-        <h2>HIGH SCORES</h2>
-        <ol id="highScores"></ol>
-      </div>
-      <canvas id="board" class="game-board"></canvas>
-      <div class="right-column">
-        <div>
-          <h1>TETRIS</h1>
-          <p>Score: <span id="score">0</span></p>
-          <p>Lines: <span id="lines">0</span></p>
-          <p>Level: <span id="level">0</span></p>
-          <canvas id="next" class="next"></canvas>
-        </div>
-        <div id="sound-div">
-          <span class="sound-item" id="sound-speaker"></span>
-          <span class="sound-item" id="sound-description"></span>
-        </div>
-        <button id="play-btn" onclick="play()" class="play-button">Play</button>
-        <button id="pause-btn" onclick="pause()" class="play-button">Pause</button>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Awareness</title>
+  <meta name="description" content="Cognitive load and situational awareness test." />
+  <link rel="stylesheet" type="text/css" href="styles.css" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="text/javascript" src="./Analytics.js"></script>
+  <script>
+    // Begin tracking metrics
+    ANALYTICS = new Analytics();
+  </script>
+</head>
+
+<body class="text-gray-700 overflow-x-hidden">
+  <div class="flex flex-row flex-nowrap justify-center w-full mt-[25px] font-sans container mx-auto w-full h-full">
+    <div class="left-column">
+      <!-- <h2>HIGH SCORES</h2> -->
+      <!-- <ol id="highScores" class="font-mono"></ol> -->
+    </div>
+    <canvas id="board" class="border-2 rounded-md border-gray-700 ml-[15px] mr-[15px]"></canvas>
+    <div class="right-column">
+      <div>
+        <!-- <p>Score: <span id="score" class="font-mono">0</span></p>-->
+        <p>Lines: <span id="lines" class="font-mono">0</span></p>
+        <!-- <p>Level: <span id="level" class="font-mono">0</span></p> -->
+        <p>Next Piece: <span class="font-mono"></span></p>
+        <canvas id="next" class="next"></canvas>
       </div>
     </div>
+  </div>
 
-    <script type="text/javascript" src="constants.js"></script>
-    <script type="text/javascript" src="board.js"></script>
-    <script type="text/javascript" src="piece.js"></script>
-    <script type="text/javascript" src="sound.js"></script>
-    <script type="text/javascript" src="main.js"></script>
-  </body>
+  <div class="w-full border fixed bottom-[0px] flex items-center bg-white">
+    <div class="m-[10px] mt-[15px]">
+      <label for="default-toggle-1" class="inline-flex relative items-center cursor-pointer">
+        <input type="checkbox" value="" id="default-toggle-1" class="sr-only peer" onchange="toggleImproved()">
+        <div
+          class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+        </div>
+        <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">UX</span>
+      </label>
+    </div>
+
+    <div class="m-[10px] mt-[15px]">
+      <label for="default-toggle-2" class="inline-flex relative items-center cursor-pointer">
+        <input type="checkbox" value="" id="default-toggle-2" class="sr-only peer" onchange="toggleInterrupts()">
+        <div
+          class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+        </div>
+        <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Tasks</span>
+      </label>
+    </div>
+
+    <div class="flex h-[35px]">
+
+      <button id="interrupt-btn" onclick="showInterruption()" class="hover:shadow-lg copy-btn rounded-md bg-gray-700 text-white
+          mx-[5px] px-[8px] pb-[2px] flex content-center align-center items-center">
+        Interrupt
+        <span class='material-icons ml-[5px]' title='rotate-btn'>assignment_late</span>
+      </button>
+
+      <button id="download-btn" onclick="ANALYTICS.exportAllData()" class="hover:shadow-lg copy-btn rounded-md bg-gray-700 text-white mx-[5px]
+          px-[8px] pb-[2px] flex content-center align-center items-center">
+        Download Data
+        <span class='material-icons ml-[5px]' title="download usage data">insert_chart</span>
+      </button>
+
+      <button id="play-btn" onclick="play()" class="hover:shadow-lg copy-btn
+          rounded-md bg-blue-600 text-white mx-[5px] px-[8px] 
+          flex content-center align-center items-center">
+        Start
+        <span class='material-icons ml-[5px]' title='rotate-btn'>play_circle</span>
+      </button>
+
+      <!-- <button id="pause-btn" onclick="pause()" class="hover:shadow-lg copy-btn
+      rounded-md bg-blue-600 text-white mx-[5px] px-[8px] 
+      flex content-center align-center items-center">
+        Pause
+        <span class='material-icons ml-[5px]' title='rotate-btn'>pause_circle</span>
+      </button> -->
+
+      <!-- this is a placeholder until pause button bugs are worked out -->
+      <span id="pause-btn" class="bg-transparent"></span>
+
+    </div>
+  </div>
+
+  <div class="w-full border-2 fixed bottom-[0px] border-blue-600 duration-[300s] ease-linear" id="progress-bar"></div>
+
+  <!-- This will hold the interruptions: -->
+  <div id="interruptions-container" class="
+      absolute duration-500 right-[-100%] top-0 w-3/4 h-screen
+      rounded-tl-md rounded-bl-md shadow-2xl bg-white/[.9]">
+    <button class="duration-500 border-2 w-[45px] h-[45px] absolute
+      rounded-full shadow hover:shadow-xl bg-gray-700 text-white right-[15px]
+      top-[15px]" onclick="hideInterruption()">X</button>
+  </div>
+
+  <!-- Toast for sending messages and such -->
+  <div id="toast-default" class="absolute top-[25px] left-[15px] flex items-center p-4 w-full max-w-xs
+      rounded-lg shadow-lg border-2 border-gray-700 text-gray-700 opacity-0
+      duration-500" role="alert">
+    <div class="ml-3 text-sm font-normal" id="toast-text"></div>
+  </div>
+
+  <script type="text/javascript" src="./interruptions/SlidingInterruption.js"></script>
+  <script type="text/javascript" src="./interruptions/TypingInterruption.js"></script>
+  <script type="text/javascript" src="./interruptions/LongestWordInterruption.js"></script>
+  <script type="text/javascript" src="./interruptions/SpatialInterruption.js"></script>
+  <script type="text/javascript" src="./interruptions/ArrangementInterruption.js"></script>
+  <script type="text/javascript" src="constants.js"></script>
+  <script type="text/javascript" src="board.js"></script>
+  <script type="text/javascript" src="piece.js"></script>
+  <script type="text/javascript" src="main.js"></script>
+
+  <script>
+    // Begin tracking metrics
+    ANALYTICS = new Analytics();
+  </script>
+
+  <script>
+    // Warn before closing tab or reloading page
+    window.onbeforeunload = function (e) {
+      e = e || window.event;
+      // For Safari
+      return 'Sure?';
+    };
+  </script>
+
+</body>
+
 </html>
