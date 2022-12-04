@@ -41,8 +41,12 @@ class Board {
     // interruptions.
     this.tickCount++;
 
+    // If we're just doing the baseline block game, set round to be 2 min.
+    // Otherwise, make it 5 minutes.
+    let round_time_limit_in_minutes = !improved && !interrupts ? 2: 5;
+
     // If it's been about 5 minutes, stop the game
-    if (Math.floor(((new Date() - begin)/1000)/60) >= 5) {
+    if (Math.floor(((new Date() - begin)/1000)/60) >= round_time_limit_in_minutes) {
       toast("Time limit reached.");
       ANALYTICS.currentDataRow['got_game_over'] = 0;
       return false;

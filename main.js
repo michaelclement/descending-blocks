@@ -152,7 +152,7 @@ function play() {
   [0, 1].forEach(i => {toggleImproved(); toggleInterrupts();})
 
   addEventListener();
-  toast('Beginning round. Five minutes remain.')
+  toast('Beginning round.');
   toggleProgressBar()
   if (document.querySelector('#play-btn').style.display == '') {
     resetGame();
