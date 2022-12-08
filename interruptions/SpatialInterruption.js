@@ -61,11 +61,14 @@ class SpatialInterruption {
         if ((e.target.title * 1) % this.step == 0 &&
             !this.clicked.includes(e.target.title)) {
             this.clicked.push(e.target.title);
+            // Color it to let them know it was clicked
+            document.getElementById(`btn-${e.target.title}`).classList.add('bg-green-700');
             // Check if they clicked all the required buttons
             if (this.clicked.length == Math.floor(this.allButtons.length / this.step)) {
                 hideInterruption();
             }
         } else if ((e.target.title * 1) % this.step !== 0) {
+            // Make it red indicating it was the wrong button
             document.getElementById(`btn-${e.target.title}`).classList.add('bg-red-600');
         }
     }
