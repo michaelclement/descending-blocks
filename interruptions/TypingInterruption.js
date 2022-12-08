@@ -18,9 +18,9 @@ class TypingInterruption {
         let content = `
             <div id="interruption-inner-container"
                 class="flex m-0 mx-auto justify-center align-center h-full flex-col w-[400px]">
-                <h1 class="text-center"><b>Type the words on the left in the boxes on the right</b></h1>
+                <h1 class="text-center"><b>TASK: Type the words on the left in the boxes on the right</b></h1>
                 ${this.improveUX ? "\
-                    <p class='text-center'><i>Copy/Paste buttons can move text faster</i></p>" : ""}
+                    <p class='text-center'><i>Click the copy/paste icons to move text faster.</i></p>" : ""}
                 ${this.buildInputs()}
             </div>
         `.trim()

@@ -25,7 +25,7 @@ class LongestWordInterruption {
         let content = `
             <div id="interruption-inner-container"
                 class="flex m-0 mx-auto justify-center align-center items-center h-full flex-col w-[400px]">
-                <h1 class="text-center"><b>Select the ${this.targetLength} word</b></h1>
+                <h1 class="text-center"><b>TASK: Select the ${this.targetLength} word</b></h1>
                 ${this.buildInputs()}
             </div>
         `.trim()
@@ -82,7 +82,7 @@ class LongestWordInterruption {
                 <button class='hover:shadow-lg rounded-md bg-blue-600 sort-btn
                 text-white mx-[5px] px-[8px] pb-[2px] mt-[5px] flex content-center align-center'\
                 id='sort-words-btn' title='Toggle sort'>
-                    Sort by length
+                    Click this to sort words by length
                     <span class='material-icons sort-btn' title='sort-btn'>sort</span>
                 </button>`: ""}
             <div class="flex flex-col flex-wrap mb-2 mt-2 w-[280px] h-[130px] align-center" id="word-btn-container">`;

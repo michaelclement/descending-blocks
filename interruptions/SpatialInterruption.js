@@ -21,7 +21,7 @@ class SpatialInterruption {
         let content = `
             <div id="interruption-inner-container"
                 class="flex m-0 mx-auto justify-center align-center items-center h-full flex-col w-[400px]">
-                <h1 class="text-center"><b>Click every ${this.formatNumber(this.step)} button</b></h1>
+                <h1 class="text-center"><b>TASK: Click every ${this.formatNumber(this.step)} button</b></h1>
                 ${this.buildInputs()}
             </div>
         `.trim()

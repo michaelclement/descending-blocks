@@ -66,12 +66,12 @@ class ArrangementInterruption {
         let content = `
             <div id="interruption-inner-container"
                 class="flex m-0 mx-auto justify-center align-center items-center h-full flex-col w-[400px] select-none">
-                <h1 class="text-center"><b>Rotate the box to ${this.targetAngle} degrees</b></h1>
+                <h1 class="text-center"><b>TASK: Rotate the box to ${this.targetAngle} degrees</b></h1>
                 ${this.improveUX ? `\
                 <button class='hover:shadow-lg copy-btn rounded-md bg-blue-600
                     text-white mx-[5px] px-[8px] pb-[2px] mt-[5px] flex content-center align-center'\
                     id='rotate-btn' title='rotate-btn'>
-                        Rotate to nearest 45deg
+                        Click this to rotate by 45deg
                         <span class='material-icons' title='rotate-btn'>replay</span>
                     </button>`: ""}
                 <div class="drag-rotate mt-[15px]">
