@@ -88,6 +88,7 @@ class TypingInterruption {
                 </button>` : ""}
               <input id="s${i}" 
                      type="text"
+                     autocomplete="off"
                      oninput="updateVal(this)"
                      class="w-[calc(100%-180px)] border border-gray-700 rounded-md mx-[10px] ${i == 0 ? 'focus-this' : ''}">
             </div>
