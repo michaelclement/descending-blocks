@@ -29,19 +29,19 @@ class Analytics {
         "global_int_total_time",
         "global_int_avg_time",
         // Track num times individual interruption was completed
-        "arrangement_completed", 
+        "arrangement_completed",
         "longest_word_completed",
         "sliding_completed",
         "spatial_completed",
         "typing_completed",
         // Track total time spent performing a given interrupt
-        "arrangement_total_time", 
+        "arrangement_total_time",
         "longest_word_total_time",
         "sliding_total_time",
         "spatial_total_time",
         "typing_total_time",
         // Track avg time spent performing a specific int
-        "arrangement_avg_time", 
+        "arrangement_avg_time",
         "longest_word_avg_time",
         "sliding_avg_time",
         "spatial_avg_time",
@@ -55,6 +55,7 @@ class Analytics {
     this.currentInterruptionName;
     this.init();
   }
+
   init() {
     // It's easier to interact with JSON for saving data, so 
     // populate JSON obj with all column headers that we'll use in CSV:
@@ -121,7 +122,7 @@ class Analytics {
    * @param {String} intName string name of a given interruption.
    */
   trackInterruption(startOrStop, intName) {
-    if (intName == undefined) {return;}
+    if (intName == undefined) { return; }
     if (startOrStop == 'start') {
       this.currentInterruptionStartTime = new Date().toISOString();
     } else {
